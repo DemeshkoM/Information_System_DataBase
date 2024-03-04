@@ -17,11 +17,6 @@
                 <Insets bottom="15.0" />
             </VBox.margin>
         </PasswordField>
-        <TextArea fx:id="dataBaseText" prefHeight="16.0" prefWidth="270.0" promptText="Введите название БД">
-            <VBox.margin>
-                <Insets bottom="5.0" />
-            </VBox.margin>
-        </TextArea>
         <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonTapped" prefHeight="34.0" prefWidth="358.0" style="-fx-background-color: rgb(98,177,208);" text="Войти" textFill="WHITE" />
     </VBox>
 </AnchorPane>
