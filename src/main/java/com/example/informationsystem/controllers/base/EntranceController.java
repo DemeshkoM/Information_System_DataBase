@@ -44,7 +44,7 @@ public class EntranceController {
     public void loginButtonTapped(ActionEvent event) throws IOException {
         try {
             alertCheck = false;
-            connection.registerConnection(loginText.getText(), passwordText.getText(), dataBaseText.getText());
+            connection.registerConnection(loginText.getText(), passwordText.getText());
         } catch (SQLException ex) {
             System.out.println("SQLException: error with connection to server");
             showAlert("error with connection to server", "");

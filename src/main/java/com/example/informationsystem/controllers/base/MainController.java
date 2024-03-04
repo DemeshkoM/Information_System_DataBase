@@ -81,7 +81,7 @@ public class MainController implements Initializable {
         try {
             data.clear();
             ResultSet set = connection.executeQueryAndGetResult("SELECT table_name FROM information_schema.tables\n" +
-                    "WHERE table_schema = '" + dataBaseName + "';");
+                    "WHERE table_schema = 'DBName';");
             if (set != null) {
                 while (set.next()) {
                     String name = set.getString(1);

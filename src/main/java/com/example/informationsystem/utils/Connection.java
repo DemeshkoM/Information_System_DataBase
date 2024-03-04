@@ -22,15 +22,25 @@ public class Connection {
         return connection;
     }
 
-    public void registerConnection(String loginText, String passwordText, String dataBaseText) throws SQLException, ClassNotFoundException {
+    public void registerConnection(String loginText, String passwordText) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        dataBaseName = dataBaseText;
-        url += dataBaseText;
+
         System.out.println(url);
         createConnection();
         System.out.println("register connection");
 
         connection = DriverManager.getConnection(url, loginText, passwordText);
+
+        Statement s1 = connection.createStatement();
+        s1.executeUpdate("CREATE DATABASE IF NOT EXISTS DBname;");
+        s1.close();
+
+        Statement s2 = connection.createStatement();
+
+        s2.executeUpdate("USE DBname");
+
+        s2.close();
+
         if (connection.isValid(1)) {
             System.out.println("success connection");
         } else {
