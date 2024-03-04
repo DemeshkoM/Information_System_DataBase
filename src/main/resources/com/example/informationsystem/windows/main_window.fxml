@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #226078;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.MainController">
+
+    <ListView fx:id="tableListView" editable="true" layoutX="29.0" layoutY="6.0" opacity="0.75" prefHeight="516.0" prefWidth="741.0">
+        <opaqueInsets>
+            <Insets />
+        </opaqueInsets></ListView>
+
+    <Button contentDisplay="CENTER" layoutX="207.0" layoutY="523.0" mnemonicParsing="false" onAction="#createButtonTapped" prefHeight="62.0" prefWidth="386.0" style="-fx-background-color: rgb(98,177,208);" text="Создать Базу Данных" textFill="WHITE" AnchorPane.bottomAnchor="14.600000000000023">
+        <font>
+            <Font size="19.0" />
+        </font></Button>
+</AnchorPane>
