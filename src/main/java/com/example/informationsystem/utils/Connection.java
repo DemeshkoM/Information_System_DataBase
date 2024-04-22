@@ -13,7 +13,7 @@ public class Connection {
     private java.sql.Connection connection;
     private static final String localIP = "127.0.0.1";
     private static final String defaultPort = "3306";
-    private String url = "jdbc:mysql://localhost:3306/";
+    private String url = "jdbc:mysql://127.0.0.1:3306/";
     public String dataBaseName;
     public Connection() {
     }
@@ -22,12 +22,17 @@ public class Connection {
         return connection;
     }
 
-    public void registerConnection(String loginText, String passwordText) throws SQLException, ClassNotFoundException {
+    public void registerConnection(String loginText, String passwordText,
+    String hostText, String portText) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
 
         System.out.println(url);
         createConnection();
         System.out.println("register connection");
+
+        if(hostText != localIP || portText != defaultPort) {
+            url = "jdbc:mysql://" + hostText + ":" + portText + "/";
+        }
 
         connection = DriverManager.getConnection(url, loginText, passwordText);
 

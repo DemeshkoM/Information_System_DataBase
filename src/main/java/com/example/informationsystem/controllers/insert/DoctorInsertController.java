@@ -3,7 +3,6 @@ package com.example.informationsystem.controllers.insert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -19,7 +18,7 @@ import java.util.ResourceBundle;
  *
  * @author Mikhail Demeshko
  */
-public class EmployeeCategoryInsertController implements InsertController, Initializable {
+public class DoctorInsertController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -48,7 +47,7 @@ public class EmployeeCategoryInsertController implements InsertController, Initi
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String name = DBInit.getSubstring(" name_employee_category=", "name_employee_category=", item);
+        String name = DBInit.getSubstring(" full_name_doctor=", "full_name_doctor=", item);
         nameField.setText(name);
     }
 
@@ -59,10 +58,10 @@ public class EmployeeCategoryInsertController implements InsertController, Initi
             String name = nameField.getText();
 
             if (insertMode == InsertMode.insert) {
-                dbInit.insertEmployeeCategory(name);
+                dbInit.insertDoctor(name);
             } else {
                 int id = DBInit.getIdFrom(item);
-                dbInit.updateEmployeeCategory(id, name);
+                dbInit.updateDoctor(id, name);
             }
             listener.changed(name_obser, "", name_obser);
             Stage stage = (Stage) insertButton.getScene().getWindow();
@@ -70,3 +69,4 @@ public class EmployeeCategoryInsertController implements InsertController, Initi
         }
     }
 }
+

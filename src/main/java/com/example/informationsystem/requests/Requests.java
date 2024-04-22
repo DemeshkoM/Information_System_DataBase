@@ -6,9 +6,19 @@ package com.example.informationsystem.requests;
  * @author Mikhail Demeshko
  */
 public enum Requests {
-    r1(new Request(
-            "Здесь будут расположены запросы",
-            "/ru/nsu/pharmacydatabase/windows/requests/r1.fxml")),//?Controller
+    select_patient(new Request(
+            "select_patient",
+            "/com/example/informationsystem/windows/cashier/cashier_search_patient.fxml")),
+
+    select_doctor(new Request(
+            "select_doctor",
+            "/com/example/informationsystem/windows/cashier/cashier_search_doctor.fxml")),
+    select_prescription(new Request(
+            "select_prescription",
+            "/com/example/informationsystem/windows/cashier/cashier_search_prescription.fxml")),
+    select_ready_med(new Request(
+            "select_ready_med",
+            "/com/example/informationsystem/windows/cashier/cashier_search_ready_med.fxml")),
     ;
 
     private final Request request;

@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: #024c68;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.insert.EmployeeCategoryTypeInsertController">
+<AnchorPane prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: #024c68;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.insert.MedicationTypesInsertController">
     <children>
         <VBox alignment="CENTER" layoutX="75.0" layoutY="5.0" prefHeight="300.0" prefWidth="300.0">
-            <Label text="Добавить тип сотрудника" textFill="WHITE">
+            <Label text="Добавить тип лекарства" textFill="WHITE">
                 <font>
                     <Font size="18.0" />
                 </font></Label>
@@ -15,7 +15,7 @@
             <TextField fx:id="nameField" prefHeight="30.0" prefWidth="300.0" promptText="Название типа">
             </TextField>
             <Label text="Выберите категорию" textFill="WHITE" />
-            <ChoiceBox fx:id="employeeCategoryChoiceBox" prefHeight="30.0" prefWidth="299.0" />
+            <ChoiceBox fx:id="medCategoryChoiceBox" prefHeight="30.0" prefWidth="299.0" />
             <Label />
 
             <Button fx:id="insertButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />

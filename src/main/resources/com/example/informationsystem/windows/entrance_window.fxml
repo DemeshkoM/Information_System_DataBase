@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #226078;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.EntranceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" style="-fx-background-color: #226078;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.EntranceController">
 
-    <VBox alignment="CENTER" layoutX="220.0" layoutY="113.0" prefHeight="373.0" prefWidth="360.0">
-        <TextArea fx:id="loginText" prefHeight="16.0" prefWidth="270.0" promptText="Введите логин">
-            <VBox.margin>
-                <Insets bottom="5.0" />
-            </VBox.margin>
-        </TextArea>
-        <PasswordField fx:id="passwordText" alignment="TOP_LEFT" prefHeight="35.0" promptText="Введите пароль">
-            <VBox.margin>
-                <Insets bottom="15.0" />
-            </VBox.margin>
-        </PasswordField>
-        <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonTapped" prefHeight="34.0" prefWidth="358.0" style="-fx-background-color: rgb(98,177,208);" text="Войти" textFill="WHITE" />
+    <VBox alignment="CENTER" layoutX="50.0" layoutY="455.0" prefHeight="117.0" prefWidth="360.0">
+      <children>
+           <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonTapped" prefHeight="34.0" prefWidth="358.0" style="-fx-background-color: rgb(98,177,208);" text="Войти" textFill="WHITE" />
+      </children>
     </VBox>
+     <TextArea fx:id="loginText" layoutX="50.0" layoutY="77.0" prefHeight="16.0" prefWidth="270.0" text="root" />
+     <PasswordField fx:id="passwordText" alignment="TOP_LEFT" layoutX="50.0" layoutY="139.0" prefHeight="35.0" prefWidth="270.0" promptText="Введите пароль" />
+
+    <Label layoutX="50.0" layoutY="196.0" prefHeight="21.0" prefWidth="80.0" text="Host/Port" textAlignment="CENTER" textFill="#a4a1a1" />
+    <TextArea fx:id="hostText" layoutX="50.0" layoutY="228.0" prefHeight="47.0" prefWidth="200.0" text="127.0.0.1" />
+   <TextArea fx:id="portText" layoutX="50.0" layoutY="300.0" prefHeight="47.0" prefWidth="200.0" text="3306" />
+
+    <ChoiceBox fx:id="userTypeChoiceBox" layoutX="50.0" layoutY="395.0" prefWidth="150.0" />
+   <Label layoutX="50.0" layoutY="367.0" text="Выбор роли" textFill="#aeadad" />
 </AnchorPane>

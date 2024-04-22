@@ -1,12 +1,16 @@
 package com.example.informationsystem.controllers.base;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
@@ -15,14 +19,17 @@ import com.example.informationsystem.utils.DBInit;
 import com.example.informationsystem.Main;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 /**
  * Выполняет обработку окна авторизации.
  *
  * @author Mikhail Demeshko
  */
-public class EntranceController {
+public class EntranceController implements Initializable {
     public final static String LOGIN_WINDOW_FXML = "/com/example/informationsystem/windows/entrance_window.fxml";
     private final Connection connection;
     private final DBInit dbInit;
@@ -31,20 +38,35 @@ public class EntranceController {
     @FXML
     private PasswordField passwordText;
     @FXML
-    private TextArea dataBaseText;
+    private TextArea hostText;
+
+    @FXML
+    private TextArea portText;
+
+    @FXML
+    private ChoiceBox userTypeChoiceBox;
 
     private Boolean alertCheck = false;
+
+    private ObservableList<String> usersList =  FXCollections.<String>observableArrayList();
 
     public EntranceController() {
         connection = Main.getConnection();
         dbInit = new DBInit(connection);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        usersList.addAll("Кассир", "Админ");
+
+        userTypeChoiceBox.setItems(usersList);
+    }
+
     @FXML
     public void loginButtonTapped(ActionEvent event) throws IOException {
         try {
             alertCheck = false;
-            connection.registerConnection(loginText.getText(), passwordText.getText());
+            connection.registerConnection(loginText.getText(), passwordText.getText(), hostText.getText(), portText.getText());
         } catch (SQLException ex) {
             System.out.println("SQLException: error with connection to server");
             showAlert("error with connection to server", "");
@@ -56,8 +78,16 @@ public class EntranceController {
             try {
                 Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader();
-                Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/admin_main_window.fxml"));
-                primaryStage.setScene(new Scene(root));
+
+                if(Objects.equals(userTypeChoiceBox.getValue().toString(), "Админ")) {
+                    Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/admin_main_window.fxml"));
+                    primaryStage.setScene(new Scene(root));
+                }
+
+                else if(Objects.equals(userTypeChoiceBox.getValue().toString(), "Кассир")) {
+                    Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/cashier/cashier_main_window.fxml"));
+                    primaryStage.setScene(new Scene(root));
+                }
             } catch (ExceptionInInitializerError ex) {
                 System.out.println("ExceptionInInitializerError: session is already exist");
                 showAlert("session is already exist", "");

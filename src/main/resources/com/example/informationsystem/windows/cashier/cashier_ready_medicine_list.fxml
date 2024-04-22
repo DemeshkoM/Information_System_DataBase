@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.CashierReadyMedSearchController">
+   <children>
+      <TableView fx:id="tableViewSearch" layoutY="135.0" prefHeight="177.0" prefWidth="1054.0" tableMenuButtonVisible="true">
+      </TableView>
+      <Button layoutX="133.0" layoutY="413.0" mnemonicParsing="false" onAction="#selectButtonTapped" text="Найти лек-во" />
+      <Pagination layoutX="334.0" layoutY="333.0" prefHeight="69.0" prefWidth="352.0" />
+      <Button layoutX="744.0" layoutY="402.0" mnemonicParsing="false" text="Продать выделенное лекарство&#10;(Если продается без рецепта)&#10; (Не работает)" />
+   </children>
+</AnchorPane>

@@ -17,16 +17,15 @@ import com.example.informationsystem.utils.DBInit;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.sql.Date;
+import java.util.*;
 
 /**
- * Выполняет обработку добавления/изменения данных в окне с таблицей "Тип сотрудника".
+ * Выполняет обработку добавления/изменения данных в окне с таблицей "Тип лекарства".
  *
  * @author Mikhail Demeshko
  */
-public class EmployeeCategoryTypeInsertController implements InsertController, Initializable {
+public class SalesInsertController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -35,12 +34,14 @@ public class EmployeeCategoryTypeInsertController implements InsertController, I
     @FXML
     private Button insertButton;
     @FXML
-    private TextField nameField;
-    @FXML
-    private ChoiceBox employeeCategoryChoiceBox;
+    private TextField salesDateField;
 
-    private ObservableList<String> itemsEmployeeCategory = FXCollections.<String>observableArrayList();
-    private Map<String, Integer> EmployeeCategory;
+    @FXML
+    private ChoiceBox idChoiceBox;
+
+    private ObservableList<String> itemsId = FXCollections.<String>observableArrayList();
+    private List<Integer> Id = new ArrayList<Integer>();;
+
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -50,18 +51,17 @@ public class EmployeeCategoryTypeInsertController implements InsertController, I
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
-        employeeCategoryChoiceBox.setItems(itemsEmployeeCategory);
-        try {
-            ResultSet setEmployeeCategory = connection.executeQueryAndGetResult("select * from employee_category");
-            EmployeeCategory = new HashMap<>();
-            itemsEmployeeCategory.clear();
+        idChoiceBox.setItems(itemsId);
 
-            if (setEmployeeCategory != null) {
-                while (setEmployeeCategory.next()) {
-                    String nameCategory = setEmployeeCategory.getString(2);
-                    Integer id = setEmployeeCategory.getInt(1);
-                    EmployeeCategory.put(nameCategory, id);
-                    itemsEmployeeCategory.add(nameCategory);
+        try {
+            ResultSet setId = connection.executeQueryAndGetResult("select * from prescription");
+            itemsId.clear();
+
+            if (setId != null) {
+                while (setId.next()) {
+                    Integer id = setId.getInt(1);
+                    Id.add(id);
+                    itemsId.add(String.valueOf(id));
                 }
             }
         } catch (java.sql.SQLException e) {
@@ -76,29 +76,31 @@ public class EmployeeCategoryTypeInsertController implements InsertController, I
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String nameCategoryType = DBInit.getSubstring(" name_employee_category_type=", "name_employee_category_type=", item);
-        String nameCategory = DBInit.getSubstring(" name_employee_category=", "name_employee_category=", item);
+
+        Integer id = DBInit.getIdFrom(item);
+        String salesDate = DBInit.getSubstring(" sales_date=", "sales_date=", item);
+
         System.out.println(item);
 
-        nameField.setText(nameCategoryType);
-        employeeCategoryChoiceBox.setValue(nameCategory);
+        idChoiceBox.setValue(id);
+        salesDateField.setText(salesDate);
     }
 
     public void insertButtonTapped(ActionEvent actionEvent) throws SQLException {
-        if (nameField.getText().isEmpty()) {
+        if (salesDateField.getText().isEmpty()) {
             showAlert("empty!", "Fill in required fields");
 
         } else {
-            String name = nameField.getText();
+            String salesDate = salesDateField.getText();
 
-            String employeeCategory = employeeCategoryChoiceBox.getValue().toString();
-            int employeeCategoryId = EmployeeCategory.get(employeeCategory);
+            String strId = idChoiceBox.getValue().toString();
+            int intId = Integer.parseInt(strId);
 
             if (insertMode == InsertMode.insert) {
-                dbInit.insertEmployeeCategoryType(name, employeeCategoryId);
+                dbInit.insertSales(intId, Date.valueOf(salesDate));
             } else {
                 int id = DBInit.getIdFrom(item);
-                dbInit.updateEmployeeCategoryType(id, name, employeeCategoryId);
+                dbInit.updateSales(id, Date.valueOf(salesDate));
             }
 
             listener.changed(name_obser, "", name_obser);

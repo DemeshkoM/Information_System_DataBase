@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import com.example.informationsystem.*;
 import com.example.informationsystem.controllers.insert.InsertController;
@@ -45,13 +46,13 @@ public class TableController implements Initializable {
     private final int rowsPerPage = 8;
 
     @FXML
-    private TableView tableView;
+    public TableView tableView;
     @FXML
-    private Button filterButton;
+    public Button filterButton;
     @FXML
-    private Pagination pagination;
+    public Pagination pagination;
     @FXML
-    private Button sortButton;
+    public Button sortButton;
 
     public TableController() {
     }
@@ -61,9 +62,15 @@ public class TableController implements Initializable {
         Object itemToRemove = tableView.getSelectionModel().getSelectedItem();
         String item = itemToRemove.toString();
         System.out.println(item);
-        int id = DBInit.getIdFrom(item);
-        if (tableName.equals("employee_category") || tableName.equals("employee_category_type")) {
+
+        if(!Objects.equals(tableName, "ingredient_recipe")) {
+            int id = DBInit.getIdFrom(item);
+
             connection.delete("DELETE FROM " + tableName + " WHERE " + " ID LIKE " + id);
+        }
+        else {
+            int id = DBInit.getIdFromIngRec(item);
+            connection.delete("DELETE FROM " + tableName + " WHERE " + " id_recipe LIKE " + id);
         }
 
         tableView.getItems().removeAll(itemToRemove);
@@ -116,6 +123,7 @@ public class TableController implements Initializable {
 
         Tables tableType = Tables.getTableByName(tableName);
         windowName = tableType.getWindowName();
+        System.out.println(windowName);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
@@ -146,6 +154,7 @@ public class TableController implements Initializable {
         filterButton.setDisable(true);
         sortButton.setDisable(true);
 
+        //tableView.setItems(items);
 
         items.clear();
         columns.clear();
@@ -191,6 +200,7 @@ public class TableController implements Initializable {
         if (tableName.equals("REQUEST")) {
             pagination.setPageFactory(this::createPage);
         }
+
     }
 
     @FXML
