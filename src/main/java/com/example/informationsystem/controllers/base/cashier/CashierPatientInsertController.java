@@ -1,4 +1,4 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.cashier;
 
 import com.example.informationsystem.Main;
 import com.example.informationsystem.controllers.insert.InsertController;
@@ -223,13 +223,15 @@ public class CashierPatientInsertController  implements Initializable {
 
         operation = "SELECT * FROM patient";
 
+        Tables tableTypePatient = Tables.getTableByName("patient");
         // many-many tables
         ResultSet set = connection.executeQueryAndGetResult(operation);
         ResultSetMetaData metaData = set.getMetaData();
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = tableTypePatient.getColumnName(i);
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -269,6 +271,7 @@ public class CashierPatientInsertController  implements Initializable {
 
         operation = "SELECT * FROM doctor";
 
+        Tables tableTypeDoctor = Tables.getTableByName("doctor");
         // many-many tables
         ResultSet set = connection.executeQueryAndGetResult(operation);
         ResultSetMetaData metaData = set.getMetaData();
@@ -276,7 +279,8 @@ public class CashierPatientInsertController  implements Initializable {
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = tableTypeDoctor.getColumnName(i);
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -381,6 +385,7 @@ public class CashierPatientInsertController  implements Initializable {
         columnsPatient.clear();
         columnNamesPatient.clear();
 
+        Requests request = Requests.getRequestByName("select_patient");
         // many-many tables
         ResultSet set = this.set;
 
@@ -388,7 +393,8 @@ public class CashierPatientInsertController  implements Initializable {
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                String columnInitialName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(columnInitialName);
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -425,6 +431,7 @@ public class CashierPatientInsertController  implements Initializable {
         columnsDoctor.clear();
         columnNamesDoctor.clear();
 
+        Requests request = Requests.getRequestByName("select_doctor");
         // many-many tables
         ResultSet set = this.set;
         ResultSetMetaData metaData = set.getMetaData();
@@ -432,7 +439,8 @@ public class CashierPatientInsertController  implements Initializable {
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                String columnInitialName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(columnInitialName);
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);

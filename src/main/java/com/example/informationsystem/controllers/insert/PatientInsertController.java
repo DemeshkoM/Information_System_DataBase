@@ -12,6 +12,7 @@ import com.example.informationsystem.utils.DBInit;
 
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -57,10 +58,10 @@ public class PatientInsertController implements InsertController, Initializable 
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String name = DBInit.getSubstring(" full_name_patient=", "full_name_patient=", item);
-        String phoneNumber = DBInit.getSubstring(" phone_number=", "phone_number=", item);
-        String address = DBInit.getSubstring(" address=", "address=", item);
-        String dateOfBirth = DBInit.getSubstring(" date_of_birth=", "date_of_birth=", item);
+        String name = DBInit.getSubstring(" ФИО=", "ФИО=", item);
+        String phoneNumber = DBInit.getSubstring(" Номер телефона=", "Номер телефона=", item);
+        String address = DBInit.getSubstring(" Адрес=", "Адрес=", item);
+        String dateOfBirth = DBInit.getSubstring(" Дата рождения=", "Дата рождения=", item);
 
         nameField.setText(name);
         phoneField.setText(phoneNumber);
@@ -68,7 +69,7 @@ public class PatientInsertController implements InsertController, Initializable 
         dateOfBirthField.setText(dateOfBirth);
     }
 
-    public void insertButtonTapped() {
+    public void insertButtonTapped() throws SQLException {
         if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || addressField.getText().isEmpty() ||
         dateOfBirthField.getText().isEmpty()) {
             showAlert("empty!", "Fill in required fields");

@@ -1,4 +1,5 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.provider;
+
 import com.example.informationsystem.Main;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
@@ -14,7 +15,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.MapValueFactory;
 import javafx.stage.Stage;
 
@@ -27,7 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CashierReadyMedSearchController  implements Initializable {
+public class ProviderReadyMedListController  implements Initializable {
     private final Connection connection = Main.getConnection();
     private final LinkedList<TableColumn<Map, String>> columnsView = new LinkedList<>();
     private final ObservableList<Map<String, Object>> itemsView = FXCollections.<Map<String, Object>>observableArrayList();
@@ -44,8 +47,7 @@ public class CashierReadyMedSearchController  implements Initializable {
     @FXML
     public Pagination paginationView;
 
-    public CashierReadyMedSearchController() {
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,10 +55,22 @@ public class CashierReadyMedSearchController  implements Initializable {
     }
 
     @FXML
-    private void buySelectedMedButtonTapped() {
-
+    private void updateMedicineInfoButtonTapped() {
+        configureWindow(InsertMode.update, "update_medicine_info");
     }
 
+    @FXML
+    private void updateCriticalNormButtonTapped() {
+        configureWindow(InsertMode.update, "update_critical_norm");
+    }
+    @FXML
+    private void updatePriceButtonTapped() {
+        configureWindow(InsertMode.update, "update_price");
+    }
+    @FXML
+    private void updateStockQuantityButtonTapped() {
+        configureWindow(InsertMode.update, "update_stock_quantity");
+    }
     @FXML
     private void selectButtonTapped() {
         modeChoiceView = "SelectReadyMed";
@@ -85,12 +99,27 @@ public class CashierReadyMedSearchController  implements Initializable {
         }
 
         windowName = tableTypeView.getWindowName();
+
         System.out.println(windowName);
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         Parent root = null;
         try {
-            root = loader.load(getClass().getResourceAsStream(windowName));
+            if(Objects.equals(modeChoice, "update_medicine_info")) {
+                root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_update_medicine.fxml"));
+            }
+            else if(Objects.equals(modeChoice, "update_critical_norm")) {
+                root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_update_med_crit_norm.fxml"));
+            }
+            else if(Objects.equals(modeChoice, "update_price")) {
+                root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_update_med_price.fxml"));
+            }
+            else if(Objects.equals(modeChoice, "update_stock_quantity")) {
+                root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_update_stock_quantity.fxml"));
+            }
+            else {
+                root = loader.load(getClass().getResourceAsStream(windowName));
+            }
             System.out.println(root);
         } catch (IOException e) {
             e.printStackTrace();
@@ -123,12 +152,15 @@ public class CashierReadyMedSearchController  implements Initializable {
         operation = "SELECT * FROM search_ready_medicine";
 
         // many-many tables
+        Requests request = Requests.getRequestByName("select_ready_med");
+
         ResultSet set = connection.executeQueryAndGetResult(operation);
         ResultSetMetaData metaData = set.getMetaData();
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(metaData.getColumnName(i));
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -165,7 +197,7 @@ public class CashierReadyMedSearchController  implements Initializable {
         ChangeListener listener = (observable, oldValue, newValue) -> {
             try {
                 this.set = connection.executeQueryAndGetResult(newValue.toString());
-                loadDataSelectPatient();
+                loadDataSelectReadyMed();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -195,19 +227,22 @@ public class CashierReadyMedSearchController  implements Initializable {
         }
     }
 
-    public void loadDataSelectPatient() throws SQLException {
+    public void loadDataSelectReadyMed() throws SQLException {
         itemsView.clear();
         columnsView.clear();
         columnNamesView.clear();
 
         // many-many tables
+        Requests request = Requests.getRequestByName("select_ready_med");
+
         ResultSet set = this.set;
 
         ResultSetMetaData metaData = set.getMetaData();
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(metaData.getColumnName(i));
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -239,5 +274,4 @@ public class CashierReadyMedSearchController  implements Initializable {
         }
     }
 }
-
 

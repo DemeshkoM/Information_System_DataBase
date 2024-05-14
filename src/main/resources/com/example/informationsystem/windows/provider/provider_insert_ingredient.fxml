@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderInsertIngredientController">
+   <children>
+      <AnchorPane layoutX="-3.0" layoutY="31.0" prefHeight="335.0" prefWidth="756.0">
+         <children>
+            <TableView fx:id="tableViewIngredient" layoutX="24.0" layoutY="68.0" prefHeight="200.0" prefWidth="560.0">
+            </TableView>
+            <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#insertButtonIngredientTapped" text="Добавить ингредиент" />
+            <Pagination layoutX="96.0" layoutY="268.0" prefHeight="64.0" prefWidth="417.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

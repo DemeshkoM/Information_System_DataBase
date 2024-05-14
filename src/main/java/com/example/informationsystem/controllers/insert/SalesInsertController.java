@@ -78,7 +78,7 @@ public class SalesInsertController implements InsertController, Initializable {
         insertButton.setText("Изменить");
 
         Integer id = DBInit.getIdFrom(item);
-        String salesDate = DBInit.getSubstring(" sales_date=", "sales_date=", item);
+        String salesDate = DBInit.getSubstring(" Дата оплаты заказа=", "Дата оплаты заказа=", item);
 
         System.out.println(item);
 

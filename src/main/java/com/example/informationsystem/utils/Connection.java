@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
- * Осуществвляет соединение и взаимодествие с сервером БД
+ * Осуществляет соединение и взаимодествие с сервером БД
  *
  * @author Mikhail Demeshko
  */
@@ -30,15 +30,29 @@ public class Connection {
         createConnection();
         System.out.println("register connection");
 
-        if(hostText != localIP || portText != defaultPort) {
+        if(!Objects.equals(hostText, localIP) || !Objects.equals(portText, defaultPort)) {
             url = "jdbc:mysql://" + hostText + ":" + portText + "/";
         }
 
         connection = DriverManager.getConnection(url, loginText, passwordText);
 
-        Statement s1 = connection.createStatement();
-        s1.executeUpdate("CREATE DATABASE IF NOT EXISTS DBname;");
-        s1.close();
+        ResultSet check = executeQueryAndGetResult("SHOW GRANTS");
+        Integer indexOfRole = -1;
+        String roleName = "";
+
+        while (check.next() && indexOfRole == -1) {
+            String x = check.getString(1);
+            indexOfRole = x.indexOf("root");
+            if(indexOfRole != -1) {
+                roleName = "root";
+            }
+        }
+
+        if(roleName.equals("root")) {
+            Statement s1 = connection.createStatement();
+            s1.executeUpdate("CREATE DATABASE IF NOT EXISTS DBname;");
+            s1.close();
+        }
 
         Statement s2 = connection.createStatement();
 
@@ -73,6 +87,18 @@ public class Connection {
         }
     }
 
+    public void createDB() throws SQLException {
+        Statement s1 = connection.createStatement();
+        s1.executeUpdate("CREATE DATABASE IF NOT EXISTS DBname;");
+        s1.close();
+
+        Statement s2 = connection.createStatement();
+
+        s2.executeUpdate("USE DBname");
+
+        s2.close();
+    }
+
     public ResultSet executeQueryAndGetResult(String sql) {
         createConnection();
         try {
@@ -92,14 +118,11 @@ public class Connection {
         }
     }
 
-    public void insert(List<String> queryList) {
+    public void insert(List<String> queryList) throws SQLException {
         createConnection();
         for(String query : queryList) {
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query);
                 statement.executeUpdate(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 

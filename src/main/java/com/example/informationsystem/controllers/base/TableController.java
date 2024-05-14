@@ -164,12 +164,16 @@ public class TableController implements Initializable {
             operation = "SELECT * FROM " + tableName;
         }
         // many-many tables
+
+        Tables tableType = Tables.getTableByName(tableName);
+
         ResultSet set = connection.executeQueryAndGetResult(operation);
         ResultSetMetaData metaData = set.getMetaData();
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for(int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = tableType.getColumnName(i);
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);

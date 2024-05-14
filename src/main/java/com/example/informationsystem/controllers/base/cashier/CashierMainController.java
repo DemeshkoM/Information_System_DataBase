@@ -1,8 +1,12 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.cashier;
 
+import com.example.informationsystem.Main;
+import com.example.informationsystem.utils.Connection;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -37,8 +41,12 @@ public class CashierMainController implements Initializable {
     @FXML
     public Button listOfPrepMedButton;
 
+    private Connection connection;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        connection = Main.getConnection();
+
         insertPatientButton.setOnMouseClicked(event -> {
             Stage stage = new Stage();
 
@@ -149,5 +157,39 @@ public class CashierMainController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
         });
+
+        listOfPrepMedButton.setOnMouseClicked(event -> {
+            Stage stage = new Stage();
+
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/cashier/cashier_search_recipe_list.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            /*
+            CashierRecipeSearchController tableController = loader.getController();
+            try {
+                tableController.loadDataSelectRecipe();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            */
+            assert root != null;
+            stage.setScene(new Scene(root));
+            stage.show();
+        });
+    }
+
+    @FXML
+    private void returnToLoginButtonTapped(ActionEvent event) throws SQLException, IOException {
+        connection.close();
+
+        Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+
+        Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/entrance_window.fxml"));
+        primaryStage.setScene(new Scene(root));
     }
 }

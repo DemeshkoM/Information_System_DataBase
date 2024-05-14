@@ -79,8 +79,8 @@ public class RecipeInsertController implements InsertController, Initializable {
         insertButton.setText("Изменить");
 
         Integer id = DBInit.getIdFrom(item);
-        String preparationMethod = DBInit.getSubstring(" preparation_method=", "preparation_method=", item);
-        String timeHours = DBInit.getSubstring(" time_hours=", "time_hours=", item);
+        String preparationMethod = DBInit.getSubstring(" Инструкция по приготовлению лек-ва=", "Инструкция по приготовлению лек-ва=", item);
+        String timeHours = DBInit.getSubstring(" Время приготовления в часах=", "Время приготовления в часах=", item);
 
         System.out.println(item);
 

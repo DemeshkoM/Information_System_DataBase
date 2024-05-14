@@ -124,13 +124,13 @@ public class PrescriptionInsertController implements InsertController, Initializ
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String namePatient = DBInit.getSubstring(" patient_id=", "patient_id=", item);
-        String nameMedicine = DBInit.getSubstring(" medicine_id=", "medicine_id=", item);
-        String nameDoctor = DBInit.getSubstring(" doctor_id=", "doctor_id=", item);
+        String namePatient = DBInit.getSubstring(" ID пациента=", "ID пациента=", item);
+        String nameMedicine = DBInit.getSubstring(" ID лек-ва=", "ID лек-ва=", item);
+        String nameDoctor = DBInit.getSubstring(" ID доктора=", "ID доктора=", item);
 
-        String nameAmount = DBInit.getSubstring(" amount=", "amount=", item);
-        String nameDiagnosis = DBInit.getSubstring(" diagnosis=", "diagnosis=", item);
-        String nameDirection = DBInit.getSubstring(" direction_for_use=", "direction_for_use=", item);
+        String nameAmount = DBInit.getSubstring(" Кол-во на продажу=", "Кол-во на продажу=", item);
+        String nameDiagnosis = DBInit.getSubstring(" Диагноз из рецепта=", "Диагноз из рецепта=", item);
+        String nameDirection = DBInit.getSubstring(" Способ применения из рецепта=", "Способ применения из рецепта=", item);
         //System.out.println(item);
 
         patientChoiceBox.setValue(namePatient);

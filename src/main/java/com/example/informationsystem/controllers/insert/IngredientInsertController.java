@@ -57,10 +57,10 @@ public class IngredientInsertController implements InsertController, Initializab
         this.item = item;
         insertButton.setText("Изменить");
 
-        String nameIng = DBInit.getSubstring(" name_ingredient=", "name_ingredient=", item);
-        String stockQuantity = DBInit.getSubstring(" stock_quantity=", "stock_quantity=", item);
-        String criticalQuantity = DBInit.getSubstring(" critical_quantity=", "critical_quantity=", item);
-        String priceValue = DBInit.getSubstring(" price=", "price=", item);
+        String nameIng = DBInit.getSubstring(" Название ингредиента=", "Название ингредиента=", item);
+        String stockQuantity = DBInit.getSubstring(" Кол-во ингр-та на складе=", "Кол-во ингр-та на складе=", item);
+        String criticalQuantity = DBInit.getSubstring(" Критическая норма=", "Критическая норма=", item);
+        String priceValue = DBInit.getSubstring(" Цена ингр-та=", "Цена ингр-та=", item);
 
         System.out.println(item);
 

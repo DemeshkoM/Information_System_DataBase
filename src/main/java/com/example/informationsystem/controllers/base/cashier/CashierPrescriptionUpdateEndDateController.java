@@ -1,4 +1,5 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.cashier;
+
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
 import com.example.informationsystem.utils.InputFilter;
@@ -27,7 +28,7 @@ import java.util.*;
  *
  * @author Mikhail Demeshko
  */
-public class CashierPrescriptionUpdateSecondAttributesController implements InsertController, Initializable {
+public class CashierPrescriptionUpdateEndDateController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -35,11 +36,8 @@ public class CashierPrescriptionUpdateSecondAttributesController implements Inse
     private String item;
     @FXML
     private Button insertButton;
-
     @FXML
-    private TextArea diagnosisField;
-    @FXML
-    private TextArea directionForUseField;
+    private DatePicker endDateField;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -59,23 +57,20 @@ public class CashierPrescriptionUpdateSecondAttributesController implements Inse
         this.item = item;
         insertButton.setText("Изменить");
 
-        String nameDiagnosis = DBInit.getSubstring(" diagnosis=", "diagnosis=", item);
-        String nameDirection = DBInit.getSubstring(" direction_for_use=", "direction_for_use=", item);
-
-        diagnosisField.setText(nameDiagnosis);
-        directionForUseField.setText(nameDirection);
+        String endDate = DBInit.getSubstring(" Дата закрытия заказа=", "Дата закрытия заказа=", item);
+        //endDateField.setValue(LocalDate.parse(endDate));
     }
 
-    public void updateSecondAttributesPrescriptionTapped() {
-        String diagnosis = diagnosisField.getText();
-        String direction = directionForUseField.getText();
+    public void updateEndDateButtonTapped() throws SQLException {
+        LocalDate endDate = endDateField.getValue();
 
         int id = DBInit.getIdFrom(item);
 
-        dbInit.updateSecondAttributesPrescription(id, diagnosis, direction);
+        dbInit.updateProductionOrderEndDate(id, Date.valueOf(endDate));
 
         listener.changed(name_obser, "", name_obser);
         Stage stage = (Stage) insertButton.getScene().getWindow();
         stage.close();
     }
 }
+

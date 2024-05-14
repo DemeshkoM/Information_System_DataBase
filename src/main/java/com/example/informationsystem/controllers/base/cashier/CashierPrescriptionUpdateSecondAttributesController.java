@@ -1,19 +1,25 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.cashier;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
+import com.example.informationsystem.utils.InputFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import com.example.informationsystem.utils.DBInit;
 import javafx.stage.Stage;
+import com.example.informationsystem.utils.DBInit;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -21,7 +27,7 @@ import java.util.*;
  *
  * @author Mikhail Demeshko
  */
-public class CashierPrescriptionUpdateOrderStatusController implements InsertController, Initializable {
+public class CashierPrescriptionUpdateSecondAttributesController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -29,10 +35,11 @@ public class CashierPrescriptionUpdateOrderStatusController implements InsertCon
     private String item;
     @FXML
     private Button insertButton;
+
     @FXML
-    private ChoiceBox orderStatusChoiceBox;
-    private ObservableList<String> itemsOrderStatus = FXCollections.<String>observableArrayList();
-    private Map<String, Integer> OrderStatus;
+    private TextArea diagnosisField;
+    @FXML
+    private TextArea directionForUseField;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -42,24 +49,6 @@ public class CashierPrescriptionUpdateOrderStatusController implements InsertCon
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
-        orderStatusChoiceBox.setItems(itemsOrderStatus);
-            orderStatusChoiceBox.setItems(itemsOrderStatus);
-            try {
-                ResultSet setOrderStatus = connection.executeQueryAndGetResult("select * from order_status");
-                OrderStatus = new HashMap<>();
-                itemsOrderStatus.clear();
-
-                if (setOrderStatus != null) {
-                    while (setOrderStatus.next()) {
-                        String nameType = setOrderStatus.getString(2);
-                        Integer id = setOrderStatus.getInt(1);
-                        OrderStatus.put(nameType, id);
-                        itemsOrderStatus.add(nameType);
-                    }
-                }
-        } catch (java.sql.SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public void setMode(InsertMode mode) {
@@ -70,18 +59,20 @@ public class CashierPrescriptionUpdateOrderStatusController implements InsertCon
         this.item = item;
         insertButton.setText("Изменить");
 
-        String orderStatus = DBInit.getSubstring(" order_status=", "order_status=", item);
+        String nameDiagnosis = DBInit.getSubstring(" Диагноз из рецепта=", "Диагноз из рецепта=", item);
+        String nameDirection = DBInit.getSubstring(" Способ применения из рецепта=", "Способ применения из рецепта", item);
 
-        orderStatusChoiceBox.setValue(orderStatus);
+        diagnosisField.setText(nameDiagnosis);
+        directionForUseField.setText(nameDirection);
     }
-    public void updateOrderStatusButtonTapped() {
 
-        String orderStatus = orderStatusChoiceBox.getValue().toString();
-        int orderStatusId = OrderStatus.get(orderStatus);
+    public void updateSecondAttributesPrescriptionTapped() throws SQLException {
+        String diagnosis = diagnosisField.getText();
+        String direction = directionForUseField.getText();
 
         int id = DBInit.getIdFrom(item);
 
-        dbInit.updateProductionOrderStatus(id, orderStatusId);
+        dbInit.updateSecondAttributesPrescription(id, diagnosis, direction);
 
         listener.changed(name_obser, "", name_obser);
         Stage stage = (Stage) insertButton.getScene().getWindow();

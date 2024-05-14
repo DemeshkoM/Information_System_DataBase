@@ -216,7 +216,7 @@ public class SelectPrescriptionController implements SelectController, Initializ
         sqlSelectMap.put(doctorField,doctor);
         sqlSelectMap.put(orderStatusField,orderStatus);
 
-        String sql = "SELECT id, full_name_patient, name_medicament, full_name_doctor, amount, diagnosis, direction_for_use," +
+        String sql = "SELECT id, full_name_patient, name_medicament, name_med_diagnosis_description, full_name_doctor, amount, diagnosis, direction_for_use," +
                 "start_date, end_date, sales_date, name_order_status";
 
         if(patient.isEmpty() && medicine.isEmpty() && doctor.isEmpty() && orderStatus.isEmpty() &&

@@ -103,9 +103,9 @@ public class ProductionOrderInsertController implements InsertController, Initia
         insertButton.setText("Изменить");
 
         Integer id = DBInit.getIdFrom(item);
-        String startDate = DBInit.getSubstring(" start_date=", "start_date=", item);
-        String endDate = DBInit.getSubstring(" end_date=", "end_date=", item);
-        String orderStatus = DBInit.getSubstring(" order_status=", "order_status=", item);
+        String startDate = DBInit.getSubstring(" Дата открытия заказа=", "Дата открытия заказа=", item);
+        String endDate = DBInit.getSubstring(" Дата закрытия заказа=", "Дата закрытия заказа=", item);
+        String orderStatus = DBInit.getSubstring(" ID статуса=", "ID статуса=", item);
 
         System.out.println(item);
 

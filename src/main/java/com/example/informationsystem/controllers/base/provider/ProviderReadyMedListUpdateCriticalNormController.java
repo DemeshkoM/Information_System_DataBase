@@ -1,33 +1,22 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.provider;
+
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
-import com.example.informationsystem.utils.InputFilter;
+import com.example.informationsystem.utils.DBInit;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.example.informationsystem.utils.DBInit;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ResourceBundle;
 
-/**
- * Выполняет обработку добавления/изменения данных в окне с таблицей "Тип лекарства".
- *
- * @author Mikhail Demeshko
- */
-public class CashierPrescriptionUpdateSalesDateController implements InsertController, Initializable {
+public class ProviderReadyMedListUpdateCriticalNormController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -35,8 +24,9 @@ public class CashierPrescriptionUpdateSalesDateController implements InsertContr
     private String item;
     @FXML
     private Button insertButton;
+
     @FXML
-    private DatePicker salesDateField;
+    private TextField criticalNormField;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -56,20 +46,17 @@ public class CashierPrescriptionUpdateSalesDateController implements InsertContr
         this.item = item;
         insertButton.setText("Изменить");
 
-        String salesDate = DBInit.getSubstring(" sales_date=", "sales_date=", item);
+        String nameDiagnosis = DBInit.getSubstring(" Критическая норма=", "Критическая норма=", item);
 
-        if(!salesDate.isEmpty()) {
-            salesDateField.setValue(LocalDate.parse(salesDate));
-        }
+        criticalNormField.setText(nameDiagnosis);
     }
 
-    public void updateSalesButtonTapped() {
-        LocalDate salesDate = salesDateField.getValue();
+    public void updateReadyMedTapped() throws SQLException {
+        String critical_quantity = criticalNormField.getText();
 
         int id = DBInit.getIdFrom(item);
 
-        //dbInit.updateSales(id, Date.valueOf(salesDate));
-        dbInit.insertSales(id, Date.valueOf(salesDate));
+        dbInit.updateReadyMedicineCriticalQuantity(id, Integer.valueOf(critical_quantity));
 
         listener.changed(name_obser, "", name_obser);
         Stage stage = (Stage) insertButton.getScene().getWindow();

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="448.0" prefWidth="621.0" style="-fx-background-color: #024c68;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderRecipeListUpdateRecipeController">
+    <children>
+        <VBox alignment="CENTER" layoutX="38.0" layoutY="3.0" prefHeight="445.0" prefWidth="546.0">
+            <Label text="Добавить информацию о приготовлении лек-ва" textFill="WHITE">
+                <font>
+                    <Font size="18.0" />
+                </font></Label>
+            <Label />
+            <Label text="Выберите номер лек-ва" textFill="WHITE" />
+            <ChoiceBox fx:id="idChoiceBox" prefHeight="30.0" prefWidth="299.0" />
+            <Label />
+            <TextArea fx:id="preparationMethodField" prefHeight="201.0" prefWidth="546.0" promptText="Сюда вставляется текст о процессе приготовления" />
+            <TextField fx:id="timeHoursField" prefHeight="31.0" prefWidth="486.0" promptText="Установите: сколько в часах занимает приготовление лек-ва">
+            </TextField>
+
+            <Button fx:id="insertButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertButtonTapped" prefHeight="47.0" prefWidth="300.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
+        </VBox>
+    </children>
+</AnchorPane>
+

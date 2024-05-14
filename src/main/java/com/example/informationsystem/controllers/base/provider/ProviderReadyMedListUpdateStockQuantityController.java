@@ -1,34 +1,22 @@
-package com.example.informationsystem.controllers.base;
+package com.example.informationsystem.controllers.base.provider;
 
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
-import com.example.informationsystem.utils.InputFilter;
+import com.example.informationsystem.utils.DBInit;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.example.informationsystem.utils.DBInit;
 
 import java.net.URL;
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.ResourceBundle;
 
-/**
- * Выполняет обработку добавления/изменения данных в окне с таблицей "Тип лекарства".
- *
- * @author Mikhail Demeshko
- */
-public class CashierPrescriptionUpdateEndDateController implements InsertController, Initializable {
+public class ProviderReadyMedListUpdateStockQuantityController implements InsertController, Initializable {
     private DBInit dbInit;
     private ChangeListener listener;
     private ObservableStringValue name_obser = new SimpleStringProperty("");
@@ -36,8 +24,9 @@ public class CashierPrescriptionUpdateEndDateController implements InsertControl
     private String item;
     @FXML
     private Button insertButton;
+
     @FXML
-    private DatePicker endDateField;
+    private TextField stockField;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -57,16 +46,17 @@ public class CashierPrescriptionUpdateEndDateController implements InsertControl
         this.item = item;
         insertButton.setText("Изменить");
 
-        String endDate = DBInit.getSubstring(" end_date=", "end_date=", item);
-        endDateField.setValue(LocalDate.parse(endDate));
+        String nameDiagnosis = DBInit.getSubstring(" Кол-во лек-ва на складе=", "Кол-во лек-ва на складе=", item);
+
+        stockField.setText(nameDiagnosis);
     }
 
-    public void updateEndDateButtonTapped() {
-        LocalDate endDate = endDateField.getValue();
+    public void updateReadyMedTapped() throws SQLException {
+        String stock_quantity = stockField.getText();
 
         int id = DBInit.getIdFrom(item);
 
-        dbInit.updateProductionOrderEndDate(id, Date.valueOf(endDate));
+        dbInit.updateReadyMedicineStockQuantity(id, Integer.valueOf(stock_quantity));
 
         listener.changed(name_obser, "", name_obser);
         Stage stage = (Stage) insertButton.getScene().getWindow();

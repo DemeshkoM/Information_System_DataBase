@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: #024c68;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.CashierPrescriptionUpdateOrderStatusController">
+<AnchorPane prefHeight="300.0" prefWidth="450.0" style="-fx-background-color: #024c68;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.cashier.CashierPrescriptionUpdateOrderStatusController">
     <children>
         <VBox alignment="CENTER" layoutX="75.0" layoutY="5.0" prefHeight="300.0" prefWidth="300.0">
             <Label text="Выберите нынешний статус заказ" textFill="WHITE" />

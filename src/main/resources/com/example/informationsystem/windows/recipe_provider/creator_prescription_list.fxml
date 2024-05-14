@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1308.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.recipe_producer.RecipeProducerPrescriptionListController">
+   <children>
+      <TableView fx:id="tableViewSearch" layoutX="12.0" layoutY="135.0" prefHeight="321.0" prefWidth="1281.0" tableMenuButtonVisible="true">
+      </TableView>
+      <Button layoutX="46.0" layoutY="86.0" mnemonicParsing="false" onAction="#selectButtonTapped" text="Найти заказ" />
+      <Button layoutX="213.0" layoutY="86.0" mnemonicParsing="false" onAction="#updateOrderStatusButtonTapped" text="Изменить статус заказа" />
+      <Pagination layoutX="477.0" layoutY="466.0" prefHeight="69.0" prefWidth="352.0" />
+      <Label layoutX="50.0" layoutY="569.0" text="Помните порядок смены статуса:&#10;1. Ожидание доставки ингредиентов&#10;2. Ожидание оплаты&#10;3. В процессе приготовления&#10;4. Готов&#10;5. Завершен/Пропал" />
+   </children>
+</AnchorPane>

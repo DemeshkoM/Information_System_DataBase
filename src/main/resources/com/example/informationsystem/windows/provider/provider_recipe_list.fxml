@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderRecipeListController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="961.0" prefWidth="1083.0">
+         <children>
+            <Pane layoutX="21.0" layoutY="47.0" prefHeight="509.0" prefWidth="1062.0">
+               <children>
+                  <Pagination layoutX="71.0" layoutY="362.0" prefHeight="64.0" prefWidth="417.0" />
+                  <TableView fx:id="tableViewRecipe" layoutY="140.0" prefHeight="200.0" prefWidth="906.0" tableMenuButtonVisible="true">
+                  </TableView>
+                  <Button mnemonicParsing="false" onAction="#updateButtonRecipeViewMedicineTapped" text="Изменить данные о лек-ве" />
+                  <Button layoutX="682.0" layoutY="362.0" mnemonicParsing="false" onAction="#searchRecipeButtonTapped" text="Найти рецепт" />
+                  <Button layoutX="280.0" mnemonicParsing="false" onAction="#removeButtonMedicineRecipeTapped" text="Удалить данные о лекарстве/рецепте" />
+                  <Button layoutX="629.0" mnemonicParsing="false" onAction="#lookPreparationMethodButtonTapped" text="Подробнее о приготовлении" />
+                  <Button layoutY="50.0" mnemonicParsing="false" onAction="#updateButtonRecipeViewRecipeTapped" text="Изменить данные о рецепте" />
+               </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="583.0">
+               <children>
+                  <Pagination layoutX="180.0" layoutY="240.0" prefHeight="78.0" prefWidth="200.0" />
+                  <TableView fx:id="tableViewRecipeIngredient" layoutY="54.0" prefHeight="200.0" prefWidth="560.0" tableMenuButtonVisible="true">
+                  </TableView>
+                  <Button mnemonicParsing="false" onAction="#updateIngredientRecipeButtonTapped" text="Изменить данные о ингредиенте для рецепта" />
+                  <Button layoutX="360.0" mnemonicParsing="false" onAction="#removeIngredientRecipeButtonTapped" text="Удалить данные о ингредиенте для рецепта" />
+                  <Button layoutX="612.0" layoutY="139.0" mnemonicParsing="false" onAction="#insertIngredientRecipeButtonTapped" text="Добавить ингредиент для рецепта" />
+                  <ComboBox fx:id="ingredientRecipeChoiceBox" layoutX="612.0" layoutY="193.0" prefWidth="150.0" />
+                  <TextField fx:id="amountField" layoutX="612.0" layoutY="248.0" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderReadyMedListController">
+   <children>
+      <TableView fx:id="tableViewSearch" layoutY="135.0" prefHeight="177.0" prefWidth="1054.0" tableMenuButtonVisible="true">
+      </TableView>
+      <Button layoutX="796.0" layoutY="352.0" mnemonicParsing="false" onAction="#selectButtonTapped" text="Найти лек-во" />
+      <Pagination layoutX="334.0" layoutY="333.0" prefHeight="69.0" prefWidth="352.0" />
+      <Button layoutX="86.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateMedicineInfoButtonTapped" text="Изменить данные о лек-ве" />
+      <Button layoutX="327.0" layoutY="402.0" mnemonicParsing="false" onAction="#updatePriceButtonTapped" text="Изменить цену" />
+      <Button layoutX="327.0" layoutY="452.0" mnemonicParsing="false" onAction="#updateCriticalNormButtonTapped" text="Изменить крит норму" />
+      <Button layoutX="86.0" layoutY="441.0" mnemonicParsing="false" onAction="#updateStockQuantityButtonTapped" prefHeight="52.0" prefWidth="206.0" text="Увеличить кол-во &#10;лек-ва на складе" />
+   </children>
+</AnchorPane>

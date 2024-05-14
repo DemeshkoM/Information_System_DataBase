@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.CashierPrescriptionSearchController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="803.0" prefWidth="1557.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.cashier.CashierPrescriptionSearchController">
    <children>
-      <TableView fx:id="tableViewSearch" layoutY="135.0" prefHeight="177.0" prefWidth="1054.0" tableMenuButtonVisible="true">
+      <TableView fx:id="tableViewSearch" layoutX="28.0" layoutY="138.0" prefHeight="346.0" prefWidth="1502.0" tableMenuButtonVisible="true">
       </TableView>
-      <Button layoutX="54.0" layoutY="460.0" mnemonicParsing="false" onAction="#selectButtonTapped" text="Найти заказ" />
-      <Button layoutX="54.0" layoutY="516.0" mnemonicParsing="false" onAction="#updateEndDateButtonTapped" text="Изменить дату закрытия" />
-      <Button layoutX="54.0" layoutY="561.0" mnemonicParsing="false" onAction="#updateSalesDateButtonTapped" text="Ввести дату оплаты" />
-      <Button layoutX="54.0" layoutY="606.0" mnemonicParsing="false" onAction="#updateOrderStatusButtonTapped" text="Изменить статус заказа" />
-      <Button layoutX="243.0" layoutY="460.0" mnemonicParsing="false" onAction="#updateSecondAttributesButtonTapped" text="Изменить другие параметры заказа" />
-      <Pagination layoutX="334.0" layoutY="333.0" prefHeight="69.0" prefWidth="352.0" />
+      <Button layoutX="955.0" layoutY="84.0" mnemonicParsing="false" onAction="#selectButtonTapped" text="Найти заказ" />
+      <Button layoutX="429.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateEndDateButtonTapped" prefHeight="31.0" prefWidth="189.0" text="Изменить дату закрытия" />
+      <Button layoutX="244.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateSalesDateButtonTapped" text="Ввести дату оплаты" />
+      <Button layoutX="28.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateOrderStatusButtonTapped" text="Изменить статус заказа" />
+      <Button layoutX="646.0" layoutY="84.0" mnemonicParsing="false" onAction="#updateSecondAttributesButtonTapped" text="Изменить другие параметры заказа" />
+      <Pagination layoutX="603.0" layoutY="492.0" prefHeight="69.0" prefWidth="352.0" />
+      <Label layoutX="35.0" layoutY="561.0" text="Помните порядок смены статуса:&#10;1. Ожидание доставки ингредиентов&#10;2. Ожидание оплаты&#10;3. В процессе приготовления&#10;4. Готов&#10;5. Завершен/Пропал&#10;" />
+      <Label layoutX="344.0" layoutY="561.0" text="Для готовых лекарств&#10;Ожидание оплаты -&gt; Готов&#10;Произойдет автоматически при попытке&#10;замены" />
    </children>
 </AnchorPane>

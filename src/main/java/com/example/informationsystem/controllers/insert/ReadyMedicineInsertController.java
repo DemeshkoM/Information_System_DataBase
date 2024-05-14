@@ -108,16 +108,14 @@ public class ReadyMedicineInsertController implements InsertController, Initiali
         this.item = item;
         insertButton.setText("Изменить");
 
-        String nameMedicament = DBInit.getSubstring(" name_medicament=", "name_medicament=", item);
-        String nameMedType = DBInit.getSubstring(" name_med_type=", "name_med_type=", item);
-        String stockQuantity = DBInit.getSubstring(" stock_quantity=", "stock_quantity=", item);
-        String criticalQuantity = DBInit.getSubstring(" critical_quantity=", "critical_quantity=", item);
-        String priceValue = DBInit.getSubstring(" price=", "price=", item);
+        String nameMedicament = DBInit.getSubstring(" ID=", "ID=", item);
+        String stockQuantity = DBInit.getSubstring(" Кол-во лек-ва на складе=", "Кол-во лек-ва на складе=", item);
+        String criticalQuantity = DBInit.getSubstring(" Критическая норма=", "Критическая норма=", item);
+        String priceValue = DBInit.getSubstring(" Цена лек-ва=", "Цена лек-ва=", item);
 
         System.out.println(item);
 
         medChoiceBox.setValue(nameMedicament);
-        medTypeChoiceBox.setValue(nameMedType);
         stockField.setText(stockQuantity);
         criticalField.setText(criticalQuantity);
         price.setText(priceValue);
@@ -132,18 +130,15 @@ public class ReadyMedicineInsertController implements InsertController, Initiali
             String criticalQuantity = criticalField.getText();
             String priceValue = price.getText();
 
-            String medType = medTypeChoiceBox.getValue().toString();
-            int medTypeId = MedType.get(medType);
-
             String med = medChoiceBox.getValue().toString();
             int medId = Med.get(med);
 
 
             if (insertMode == InsertMode.insert) {
-                dbInit.insertReadyMedicine(medId, medTypeId, Integer.valueOf(stockQuantity), Integer.valueOf(criticalQuantity), Integer.valueOf(priceValue));
+                dbInit.insertReadyMedicine(medId, Integer.valueOf(stockQuantity), Integer.valueOf(criticalQuantity), Integer.valueOf(priceValue));
             } else {
                 int id = DBInit.getIdFrom(item);
-                dbInit.updateReadyMedicine(medId, medTypeId, Integer.valueOf(stockQuantity), Integer.valueOf(criticalQuantity), Integer.valueOf(priceValue));
+                dbInit.updateReadyMedicine(medId, Integer.valueOf(stockQuantity), Integer.valueOf(criticalQuantity), Integer.valueOf(priceValue));
             }
 
             listener.changed(name_obser, "", name_obser);

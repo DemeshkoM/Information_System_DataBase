@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import com.example.informationsystem.utils.DBInit;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -47,11 +48,11 @@ public class MedicationCategoryInsertController implements InsertController, Ini
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String name = DBInit.getSubstring(" name_med_category=", "name_med_category=", item);
+        String name = DBInit.getSubstring(" Название категории лек-ва=", "Название категории лек-ва=", item);
         nameField.setText(name);
     }
 
-    public void insertButtonTapped() {
+    public void insertButtonTapped() throws SQLException {
         if (nameField.getText().isEmpty()) {
             showAlert("empty!", "Fill in required fields");
         } else {

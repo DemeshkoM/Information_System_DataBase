@@ -1,5 +1,4 @@
-package com.example.informationsystem.controllers.base;
-
+package com.example.informationsystem.controllers.base.cashier;
 import com.example.informationsystem.Main;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
@@ -28,7 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class CashierPrescriptionSearchController  implements Initializable {
+public class CashierReadyMedSearchController  implements Initializable {
     private final Connection connection = Main.getConnection();
     private final LinkedList<TableColumn<Map, String>> columnsView = new LinkedList<>();
     private final ObservableList<Map<String, Object>> itemsView = FXCollections.<Map<String, Object>>observableArrayList();
@@ -45,7 +44,7 @@ public class CashierPrescriptionSearchController  implements Initializable {
     @FXML
     public Pagination paginationView;
 
-    public CashierPrescriptionSearchController() {
+    public CashierReadyMedSearchController() {
     }
 
     @Override
@@ -54,39 +53,13 @@ public class CashierPrescriptionSearchController  implements Initializable {
     }
 
     @FXML
-    private void updateEndDateButtonTapped() {
-        modeChoiceView = "view_search_prescription_end_date";
-        if(tableViewSearch.getSelectionModel().getSelectedItem() != null) {
-            configureWindow(InsertMode.update, modeChoiceView);
-        }
-    }
+    private void buySelectedMedButtonTapped() {
 
-    @FXML
-    private void updateSalesDateButtonTapped() {
-        modeChoiceView = "view_search_prescription_sales_date";
-        if(tableViewSearch.getSelectionModel().getSelectedItem() != null) {
-            configureWindow(InsertMode.update, modeChoiceView);
-        }
-    }
-
-    @FXML
-    private void updateOrderStatusButtonTapped() {
-        modeChoiceView = "view_search_prescription_order_status";
-        if(tableViewSearch.getSelectionModel().getSelectedItem() != null) {
-            configureWindow(InsertMode.update, modeChoiceView);
-        }
-    }
-    @FXML
-    private void updateSecondAttributesButtonTapped() {
-        modeChoiceView = "view_search_prescription_second_attributes";
-        if(tableViewSearch.getSelectionModel().getSelectedItem() != null) {
-            configureWindow(InsertMode.update, modeChoiceView);
-        }
     }
 
     @FXML
     private void selectButtonTapped() {
-        modeChoiceView = "SelectPrescription";
+        modeChoiceView = "SelectReadyMed";
         configureSelectWindow(modeChoiceView);
     }
     public void configureWindow(InsertMode mode, String modeChoice) {
@@ -147,7 +120,9 @@ public class CashierPrescriptionSearchController  implements Initializable {
         columnNamesView.clear();
         String operation;
 
-        operation = "SELECT * FROM search_prescription";
+        operation = "SELECT * FROM search_ready_medicine";
+
+        Requests request = Requests.getRequestByName("select_ready_med");
 
         // many-many tables
         ResultSet set = connection.executeQueryAndGetResult(operation);
@@ -155,7 +130,8 @@ public class CashierPrescriptionSearchController  implements Initializable {
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(metaData.getColumnName(i));
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -187,7 +163,6 @@ public class CashierPrescriptionSearchController  implements Initializable {
         }
     }
 
-
     public void configureSelectWindow(String modeChoice) {
         String windowName = "";
         ChangeListener listener = (observable, oldValue, newValue) -> {
@@ -199,8 +174,8 @@ public class CashierPrescriptionSearchController  implements Initializable {
             }
         };
 
-        if(Objects.equals(modeChoice, "SelectPrescription")) {
-            Requests requestTypePatient = Requests.getRequestByName("select_prescription");
+        if(Objects.equals(modeChoice, "SelectReadyMed")) {
+            Requests requestTypePatient = Requests.getRequestByName("select_ready_med");
 
 
             windowName = requestTypePatient.getWindowName();
@@ -229,13 +204,16 @@ public class CashierPrescriptionSearchController  implements Initializable {
         columnNamesView.clear();
 
         // many-many tables
+        Requests request = Requests.getRequestByName("select_ready_med");
+
         ResultSet set = this.set;
 
         ResultSetMetaData metaData = set.getMetaData();
         int columnSize = set.getMetaData().getColumnCount();
         try {
             for (int i = 1; i <= columnSize; i++) {
-                String columnName = metaData.getColumnName(i);
+                //String columnName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(metaData.getColumnName(i));
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
@@ -267,4 +245,5 @@ public class CashierPrescriptionSearchController  implements Initializable {
         }
     }
 }
+
 

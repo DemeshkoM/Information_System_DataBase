@@ -76,8 +76,8 @@ public class MedicationTypesInsertController implements InsertController, Initia
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String nameCategoryType = DBInit.getSubstring(" name_med_type=", "name_med_type=", item);
-        String nameCategory = DBInit.getSubstring(" name_med_category_id=", "name_med_category_id=", item);
+        String nameCategoryType = DBInit.getSubstring(" Название типа лек-ва=", "Название типа лек-ва=", item);
+        String nameCategory = DBInit.getSubstring(" ID категории лек-ва=", "ID категории лек-ва=", item);
         System.out.println(item);
 
         nameField.setText(nameCategoryType);

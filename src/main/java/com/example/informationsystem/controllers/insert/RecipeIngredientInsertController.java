@@ -93,9 +93,9 @@ public class RecipeIngredientInsertController implements InsertController, Initi
         this.item = item;
         insertButton.setText("Изменить");
 
-        String amount = DBInit.getSubstring(" amount_ingredient=", "amount_ingredient=", item);
-        String ingredientId = DBInit.getSubstring(" id_ingredient=", "id_ingredient=", item);
-        String recipeId = DBInit.getSubstring(" id_recipe=", "id_recipe=", item);
+        String amount = DBInit.getSubstring(" Кол-во расходуемого ингр-та в ходе приготовления=", "Кол-во расходуемого ингр-та в ходе приготовления=", item);
+        String ingredientId = DBInit.getSubstring(" ID ингредиента=", "ID ингредиента=", item);
+        String recipeId = DBInit.getSubstring(" ID рецепта=", "ID рецепта=", item);
 
         System.out.println(item);
 

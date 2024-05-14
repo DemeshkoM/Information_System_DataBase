@@ -102,9 +102,9 @@ public class MedicineInsertController implements InsertController, Initializable
     public void setItem(String item) {
         this.item = item;
         insertButton.setText("Изменить");
-        String nameMedicament = DBInit.getSubstring(" name_medicament=", "name_medicament=", item);
-        String nameMedType = DBInit.getSubstring(" name_med_type=", "name_med_type=", item);
-        String nameMedDesc = DBInit.getSubstring(" med_diagnosis_description_id=", "med_diagnosis_description_id=", item);
+        String nameMedicament = DBInit.getSubstring(" Название лек-ва=", "Название лек-ва=", item);
+        String nameMedType = DBInit.getSubstring(" ID типа лек-ва=", "ID типа лек-ва=", item);
+        String nameMedDesc = DBInit.getSubstring(" ID области применения лек-ва=", "ID области применения лек-ва=", item);
 
 
         nameField.setText(nameMedicament);

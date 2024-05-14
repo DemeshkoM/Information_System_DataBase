@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane prefHeight="1461.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderMedicineInsertController">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1405.0" prefWidth="986.0">
+         <children>
+            <Pane fx:id="medicine" layoutX="23.0" layoutY="36.0">
+               <children>
+                  <Label text="Название лек-ва" />
+                  <Label layoutY="107.0" text="Выберете тип лек-ва" />
+                  <ComboBox fx:id="typeMedChoiceBox" editable="true" layoutY="141.0" prefHeight="31.0" prefWidth="308.0" />
+                  <Label layoutY="205.0" text="Выберете область применения лек-ва" />
+                  <ComboBox fx:id="diagnosisDescMedChoiceBox" editable="true" layoutY="238.0" prefHeight="31.0" prefWidth="308.0" />
+                  <TextField fx:id="nameField" layoutY="51.0" prefHeight="31.0" prefWidth="308.0" />
+                  <Label layoutX="2.0" layoutY="292.0" text="Продается без рецепта?" />
+                  <ComboBox fx:id="checkPrescChoiceBox" editable="true" layoutX="2.0" layoutY="325.0" prefHeight="31.0" prefWidth="308.0" />
+               </children>
+            </Pane>
+            <Button fx:id="insertReadyMedFormButton" layoutX="499.0" layoutY="162.0" mnemonicParsing="false" onAction="#insertReadyMedFormButtonTapped" text="Добавить новое лек-во в список готовых" />
+            <Button fx:id="insertIngredientForm" layoutX="499.0" layoutY="236.0" mnemonicParsing="false" onAction="#insertIngredientFormButtonTapped" text="Добавить новое лек-во в справочник изготовляемых" />
+            <Button layoutX="499.0" layoutY="305.0" mnemonicParsing="false" onAction="#cleanFormButtonTapped" text="Очистить форму заполнения" />
+            <Pane fx:id="ingredient" layoutX="23.0" layoutY="474.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#searchIngredientButtonTapped" text="Найти ингредиент" />
+                  <Button layoutX="209.0" mnemonicParsing="false" onAction="#insertButtonIngredientTapped" text="Добавить новый ингредиент" />
+                  <TableView fx:id="tableViewIngredient" layoutY="50.0" prefHeight="200.0" prefWidth="560.0">
+                  </TableView>
+                  <Pagination layoutX="72.0" layoutY="250.0" prefHeight="64.0" prefWidth="417.0" />
+                  <Button layoutX="629.0" layoutY="126.0" mnemonicParsing="false" onAction="#insertRecipeFormButtonTapped" text="Перейти к форме заполнения рецепта" />
+               </children>
+            </Pane>
+            <Pane fx:id="recipe" layoutX="23.0" layoutY="887.0">
+               <children>
+                  <TextArea fx:id="preparationMethod" layoutX="2.0" layoutY="36.0" prefHeight="253.0" prefWidth="560.0" />
+                  <Label text="Процесс приготовления" />
+                  <TextArea fx:id="timeHours" layoutX="4.0" layoutY="336.0" prefHeight="48.0" prefWidth="160.0" />
+                  <Label layoutX="4.0" layoutY="313.0" text="Сколько часов займет?" />
+                  <Button layoutX="394.0" layoutY="345.0" mnemonicParsing="false" onAction="#insertButtonRecipeTapped" text="Добавить рецепт" />
+               </children>
+            </Pane>
+            <Pane fx:id="ingredient_recipe" layoutX="670.0" layoutY="986.0">
+               <children>
+                  <TableView fx:id="tableViewRecipeIngredient" prefHeight="200.0" prefWidth="279.0">
+                  </TableView>
+                  <Button layoutY="326.0" mnemonicParsing="false" onAction="#insertIngredientRecipeButtonTapped" text="Добавить ингредиент &#10;и необходимое его число &#10;для изготовления лек-ва" />
+                  <ComboBox fx:id="ingredientRecipeChoiceBox" layoutY="214.0" prefWidth="150.0" />
+                  <TextField fx:id="amountField" layoutY="269.0" />
+               </children>
+            </Pane>
+            <Button layoutX="35.0" layoutY="1340.0" mnemonicParsing="false" onAction="#cleanFormButtonTapped" text="Очистить форму заполнения" />
+            <VBox fx:id="readyMed" alignment="CENTER" layoutX="27.0" layoutY="466.0" prefHeight="300.0" prefWidth="300.0">
+               <children>
+                  <Label text="Добавить готовое лекарство">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label />
+                  <Label />
+                  <TextField fx:id="storageQuantityField" prefHeight="30.0" prefWidth="300.0" promptText="Количество лек-ва на складе" />
+                  <Label />
+                  <TextField fx:id="criticalQuantityField" prefHeight="30.0" prefWidth="300.0" promptText="Критическая норма лек-ва" />
+                  <Label />
+                  <TextField fx:id="priceField" prefHeight="30.0" prefWidth="300.0" promptText="Цена лек-ва" />
+                  <Label />
+                  <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertReadyMedButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
