@@ -67,7 +67,7 @@ public class AdminCreateController implements Initializable {
             showAlert("error with connection to server", "");
         }
         if (isNotEmpty()  && !alertCheck) {
-        showAlert("Завершено", "Админ создан. Пользователь может зайти через окно логин/пароль.");
+        showConfirmation("Завершено", "Админ создан. Пользователь может зайти через окно логин/пароль.");
         }
     }
 
@@ -79,6 +79,15 @@ public class AdminCreateController implements Initializable {
         alertCheck = true;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showConfirmation(String header, String content) {
+        alertCheck = true;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();

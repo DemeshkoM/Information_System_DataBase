@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -14,6 +13,7 @@
             </TableView>
             <Button layoutX="24.0" layoutY="14.0" mnemonicParsing="false" onAction="#insertButtonIngredientTapped" text="Добавить ингредиент" />
             <Pagination layoutX="96.0" layoutY="268.0" prefHeight="64.0" prefWidth="417.0" />
+            <Button layoutX="228.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchIngredientButtonTapped" text="Найти ингредиент" />
          </children>
       </AnchorPane>
    </children>

@@ -27,12 +27,12 @@
          <Font size="19.0" />
       </font>
    </Button>
-   <Button contentDisplay="CENTER" layoutX="406.0" layoutY="519.0" mnemonicParsing="false" onAction="#createButtonTapped" prefHeight="67.0" prefWidth="364.0" style="-fx-background-color: rgb(98,177,208);" text="Создать Тестовых Пользователей" textFill="WHITE">
+   <Button contentDisplay="CENTER" layoutX="406.0" layoutY="519.0" mnemonicParsing="false" onAction="#createAllUsersButtonTapped" prefHeight="67.0" prefWidth="364.0" style="-fx-background-color: rgb(98,177,208);" text="Создать Тестовых Пользователей" textFill="WHITE">
       <font>
          <Font size="19.0" />
       </font>
    </Button>
-   <Button contentDisplay="CENTER" layoutX="406.0" layoutY="629.0" mnemonicParsing="false" onAction="#createButtonTapped" prefHeight="67.0" prefWidth="364.0" style="-fx-background-color: rgb(98,177,208);" text="Вернуться к окну авторизации" textFill="WHITE">
+   <Button contentDisplay="CENTER" layoutX="406.0" layoutY="629.0" mnemonicParsing="false" onAction="#returnToLoginButtonTapped" prefHeight="67.0" prefWidth="364.0" style="-fx-background-color: rgb(98,177,208);" text="Вернуться к окну авторизации" textFill="WHITE">
       <font>
          <Font size="19.0" />
       </font>

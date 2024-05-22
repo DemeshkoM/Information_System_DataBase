@@ -2,6 +2,7 @@ package com.example.informationsystem.controllers.select;
 
 import com.example.informationsystem.controllers.insert.InsertMode;
 import com.example.informationsystem.utils.DBInit;
+import com.example.informationsystem.utils.InputFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
@@ -57,6 +58,8 @@ public class SelectIngredientController implements SelectController, Initializab
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        nameBox.getEditor().textProperty().addListener(new InputFilter(nameBox, filteredItemsName, false));
 
         nameBox.setItems(itemsName);
 

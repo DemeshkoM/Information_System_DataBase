@@ -10,13 +10,13 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="468.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.select.SelectPrescriptionController">
    <children>
       <Label layoutX="30.0" layoutY="46.0" text="Пациент" />
-      <ComboBox fx:id="patientBox" layoutX="30.0" layoutY="67.0" prefWidth="150.0" />
+      <ComboBox fx:id="patientBox" editable="true" layoutX="30.0" layoutY="67.0" prefWidth="150.0" />
       <Label layoutX="30.0" layoutY="120.0" text="Доктор" />
-      <ComboBox fx:id="doctorBox" layoutX="30.0" layoutY="141.0" prefWidth="150.0" />
+      <ComboBox fx:id="doctorBox" editable="true" layoutX="30.0" layoutY="141.0" prefWidth="150.0" />
       <Label layoutX="30.0" layoutY="189.0" text="Лек-во" />
-      <ComboBox fx:id="medicineBox" layoutX="30.0" layoutY="210.0" prefWidth="150.0" />
+      <ComboBox fx:id="medicineBox" editable="true" layoutX="30.0" layoutY="210.0" prefWidth="150.0" />
       <Label layoutX="30.0" layoutY="266.0" text="Статус заказа" />
-      <ComboBox fx:id="orderStatusBox" layoutX="30.0" layoutY="287.0" prefWidth="150.0" />
+      <ComboBox fx:id="orderStatusBox" editable="true" layoutX="30.0" layoutY="287.0" prefWidth="150.0" />
       <Label layoutX="284.0" layoutY="46.0" text="Поиск по временным интервалам&#10;Режим поиска" />
       <DatePicker fx:id="startDate" layoutX="426.0" layoutY="174.0" prefHeight="31.0" prefWidth="92.0" />
       <DatePicker fx:id="endDate" layoutX="426.0" layoutY="210.0" prefHeight="31.0" prefWidth="92.0" />

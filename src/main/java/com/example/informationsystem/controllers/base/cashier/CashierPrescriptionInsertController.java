@@ -2,6 +2,7 @@ package com.example.informationsystem.controllers.base.cashier;
 
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
+import com.example.informationsystem.utils.DatePickerFormatter;
 import com.example.informationsystem.utils.InputFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -100,6 +101,7 @@ public class CashierPrescriptionInsertController implements InsertController, In
     private Pane patientDoctorPane;
     @FXML
     private Pane learnStockPane;
+    private DatePickerFormatter datePickerFormatter;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -109,6 +111,12 @@ public class CashierPrescriptionInsertController implements InsertController, In
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(startDateField);
+        datePickerFormatter.setDatePickerFormatter(endDateField);
+
         patientChoiceBox.getEditor().textProperty().addListener(new InputFilter(patientChoiceBox, filteredItemsPatient, false));
         medicineChoiceBox.getEditor().textProperty().addListener(new InputFilter(medicineChoiceBox, filteredItemsMedicine, false));
         doctorChoiceBox.getEditor().textProperty().addListener(new InputFilter(doctorChoiceBox, filteredItemsDoctor, false));
@@ -279,7 +287,7 @@ public class CashierPrescriptionInsertController implements InsertController, In
                         dbInit.insertProductionOrder(lastId, orderStatusId, Date.valueOf(startDate), Date.valueOf(endDate));
                     }
 
-                    showAlert("Завершено", "Заказ добавлен в список.");
+                    showConfirmation("Завершено", "Заказ добавлен в список.");
                 }
                 catch (NullPointerException e) {
                     showAlert("Ошибка", "Заказ требует указать статус, дату открытия и закрытия");

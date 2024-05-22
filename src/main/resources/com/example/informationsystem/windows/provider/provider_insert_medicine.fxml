@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="1461.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderMedicineInsertController">
+<ScrollPane prefHeight="958.0" prefWidth="1017.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.informationsystem.controllers.base.provider.ProviderMedicineInsertController">
    <content>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1405.0" prefWidth="986.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1413.0" prefWidth="1013.0">
          <children>
             <Pane fx:id="medicine" layoutX="23.0" layoutY="36.0">
                <children>
@@ -79,6 +79,7 @@
                   <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertReadyMedButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
                </children>
             </VBox>
+            <Button layoutX="499.0" layoutY="89.0" mnemonicParsing="false" onAction="#learnInfoOnMedNameInListsButtonTapped" text="Узнать: есть ли лек-во с таким названием в списках" />
          </children>
       </AnchorPane>
    </content>

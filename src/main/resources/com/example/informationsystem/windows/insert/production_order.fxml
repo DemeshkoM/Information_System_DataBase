@@ -18,11 +18,11 @@
             <Label text="Выберите нынешний статус заказ" textFill="WHITE" />
             <ChoiceBox fx:id="orderStatusChoiceBox" prefHeight="30.0" prefWidth="299.0" />
             <Label />
-            <TextField fx:id="startDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите дату приема заказа">
-            </TextField>
+            <DatePicker fx:id="startDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите дату приема заказа">
+            </DatePicker>
             <Label />
-            <TextField fx:id="endDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите предполагаемую дату завершения заказа">
-            </TextField>
+            <DatePicker fx:id="endDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите предполагаемую дату завершения заказа">
+            </DatePicker>
             <Label />
             <Button fx:id="insertButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
         </VBox>

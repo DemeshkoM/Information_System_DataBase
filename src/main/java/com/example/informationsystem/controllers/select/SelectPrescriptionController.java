@@ -2,6 +2,8 @@ package com.example.informationsystem.controllers.select;
 
 import com.example.informationsystem.controllers.insert.InsertMode;
 import com.example.informationsystem.utils.DBInit;
+import com.example.informationsystem.utils.DatePickerFormatter;
+import com.example.informationsystem.utils.InputFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
@@ -64,6 +66,7 @@ public class SelectPrescriptionController implements SelectController, Initializ
     private DatePicker salesEndPredDate;
     @FXML
     private ChoiceBox modeDateSelectBox;
+    private DatePickerFormatter datePickerFormatter;
 
 
     @Override
@@ -74,6 +77,18 @@ public class SelectPrescriptionController implements SelectController, Initializ
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(startDate);
+        datePickerFormatter.setDatePickerFormatter(endDate);
+        datePickerFormatter.setDatePickerFormatter(salesDate);
+        datePickerFormatter.setDatePickerFormatter(salesEndPredDate);
+
+        patientBox.getEditor().textProperty().addListener(new InputFilter(patientBox, filteredItemsPatient, false));
+        medicineBox.getEditor().textProperty().addListener(new InputFilter(medicineBox, filteredItemsMedicine, false));
+        doctorBox.getEditor().textProperty().addListener(new InputFilter(doctorBox, filteredItemsDoctor, false));
+        orderStatusBox.getEditor().textProperty().addListener(new InputFilter(orderStatusBox, filteredItemsOrderStatus, false));
 
         patientBox.setItems(itemsPatient);
         medicineBox.setItems(itemsMedicine);

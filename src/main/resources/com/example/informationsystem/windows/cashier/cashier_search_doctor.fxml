@@ -9,6 +9,6 @@
    <children>
       <Label layoutX="30.0" layoutY="36.0" text="ФИО" textFill="WHITE" />
       <Button layoutX="26.0" layoutY="101.0" mnemonicParsing="false" onAction="#listButtonTapped" style="-fx-background-color: rgb(98,177,208);" text="Поиск" textFill="WHITE" />
-      <ComboBox fx:id="nameBox" layoutX="26.0" layoutY="57.0" prefHeight="31.0" prefWidth="173.0" />
+      <ComboBox fx:id="nameBox" editable="true" layoutX="26.0" layoutY="57.0" prefHeight="31.0" prefWidth="173.0" />
    </children>
 </AnchorPane>

@@ -45,6 +45,7 @@ public class CashierPrescriptionSearchController  implements Initializable {
     @FXML
     public Pagination paginationView;
 
+
     public CashierPrescriptionSearchController() {
     }
 

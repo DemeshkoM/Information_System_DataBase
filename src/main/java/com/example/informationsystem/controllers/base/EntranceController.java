@@ -125,14 +125,14 @@ public class EntranceController implements Initializable {
                 }
 
                 else if(roleName.equals("provider")) {
-                    Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_main_window.fxml"));
+                    Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_medicine_main_window.fxml"));
                     primaryStage.setScene(new Scene(root));
                 }
                 else if(roleName.equals("root")) {
                     Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/admin_main_window.fxml"));
                     primaryStage.setScene(new Scene(root));
                 }
-
+                /*
                 if(Objects.equals(userTypeChoiceBox.getValue().toString(), "Админ")) {
                     Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/admin_main_window.fxml"));
                     primaryStage.setScene(new Scene(root));
@@ -147,7 +147,7 @@ public class EntranceController implements Initializable {
                     Parent root = loader.load(getClass().getResourceAsStream("/com/example/informationsystem/windows/provider/provider_main_window.fxml"));
                     primaryStage.setScene(new Scene(root));
                 }
-
+                */
             } catch (ExceptionInInitializerError ex) {
                 System.out.println("ExceptionInInitializerError: session is already exist");
                 showAlert("session is already exist", "");

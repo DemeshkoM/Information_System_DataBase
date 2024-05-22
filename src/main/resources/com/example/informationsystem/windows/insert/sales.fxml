@@ -15,8 +15,8 @@
             <Label text="Выберите номер рецепта, реализуемого в заказе" textFill="WHITE" />
             <ChoiceBox fx:id="idChoiceBox" prefHeight="30.0" prefWidth="299.0" />
             <Label />
-            <TextField fx:id="salesDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите дату оплаты заказа">
-            </TextField>
+            <DatePicker fx:id="salesDateField" prefHeight="30.0" prefWidth="300.0" promptText="Установите дату оплаты заказа">
+            </DatePicker>
 
             <Button fx:id="insertButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
         </VBox>

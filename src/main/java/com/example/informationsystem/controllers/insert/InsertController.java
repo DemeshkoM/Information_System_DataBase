@@ -19,6 +19,14 @@ public interface InsertController {
         alert.showAndWait();
     }
 
+    default void showConfirmation(String message, String comment) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(message);
+        alert.setContentText(comment);
+        alert.showAndWait();
+    }
+
     void setMode(InsertMode mode);
     void setItem(String item);
 }

@@ -1,11 +1,13 @@
 package com.example.informationsystem.controllers.insert;
 
+import com.example.informationsystem.utils.DatePickerFormatter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.informationsystem.utils.DBInit;
@@ -13,6 +15,8 @@ import com.example.informationsystem.utils.DBInit;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -38,7 +42,8 @@ public class PatientInsertController implements InsertController, Initializable 
     private TextField addressField;
 
     @FXML
-    private TextField dateOfBirthField;
+    private DatePicker dateOfBirthField;
+    private DatePickerFormatter datePickerFormatter;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -48,6 +53,9 @@ public class PatientInsertController implements InsertController, Initializable 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(dateOfBirthField);
     }
 
     public void setMode(InsertMode mode) {
@@ -66,18 +74,18 @@ public class PatientInsertController implements InsertController, Initializable 
         nameField.setText(name);
         phoneField.setText(phoneNumber);
         addressField.setText(address);
-        dateOfBirthField.setText(dateOfBirth);
+        dateOfBirthField.setValue(LocalDate.parse(dateOfBirth));
     }
 
     public void insertButtonTapped() throws SQLException {
         if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || addressField.getText().isEmpty() ||
-        dateOfBirthField.getText().isEmpty()) {
+                Objects.equals(String.valueOf(dateOfBirthField.getValue()), "")) {
             showAlert("empty!", "Fill in required fields");
         } else {
             String name = nameField.getText();
             String phoneNumber = phoneField.getText();
             String address = addressField.getText();
-            String dateOfBirth = dateOfBirthField.getText();
+            String dateOfBirth = String.valueOf(dateOfBirthField.getValue());
 
             if (insertMode == InsertMode.insert) {
                 dbInit.insertPatient(name, phoneNumber, address, Date.valueOf(dateOfBirth));

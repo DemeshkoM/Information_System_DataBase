@@ -21,8 +21,8 @@
             <TextField fx:id="addressField" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="300.0" promptText="Адрес">
             </TextField>
             <Label />
-            <TextField fx:id="dateOfBirthField" alignment="TOP_LEFT" prefHeight="40.0" prefWidth="300.0" promptText="Дата рождения">
-            </TextField>
+            <DatePicker fx:id="dateOfBirthField" prefHeight="40.0" prefWidth="300.0" promptText="Дата рождения">
+            </DatePicker>
             <Label />
             <Button fx:id="insertButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#insertButtonTapped" prefHeight="33.0" prefWidth="304.0" style="-fx-background-color: rgb(98,177,208);" text="Добавить" textFill="WHITE" />
         </VBox>

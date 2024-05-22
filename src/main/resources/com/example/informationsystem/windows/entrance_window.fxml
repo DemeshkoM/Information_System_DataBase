@@ -14,7 +14,7 @@
            <Button fx:id="loginButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginButtonTapped" prefHeight="34.0" prefWidth="358.0" style="-fx-background-color: rgb(98,177,208);" text="Войти" textFill="WHITE" />
       </children>
     </VBox>
-     <TextArea fx:id="loginText" layoutX="50.0" layoutY="77.0" prefHeight="16.0" prefWidth="270.0" text="root" />
+     <TextArea fx:id="loginText" layoutX="50.0" layoutY="77.0" prefHeight="16.0" prefWidth="270.0" promptText="Введите логин" />
      <PasswordField fx:id="passwordText" alignment="TOP_LEFT" layoutX="50.0" layoutY="139.0" prefHeight="35.0" prefWidth="270.0" promptText="Введите пароль" />
 
     <Label layoutX="50.0" layoutY="196.0" prefHeight="21.0" prefWidth="80.0" text="Host/Port" textAlignment="CENTER" textFill="#a4a1a1" />

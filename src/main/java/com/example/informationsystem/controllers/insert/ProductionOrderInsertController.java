@@ -1,5 +1,6 @@
 package com.example.informationsystem.controllers.insert;
 
+import com.example.informationsystem.utils.DatePickerFormatter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.informationsystem.utils.DBInit;
@@ -18,6 +20,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -34,10 +37,10 @@ public class ProductionOrderInsertController implements InsertController, Initia
     @FXML
     private Button insertButton;
     @FXML
-    private TextField startDateField;
+    private DatePicker startDateField;
 
     @FXML
-    private TextField endDateField;
+    private DatePicker endDateField;
     @FXML
     private ChoiceBox orderStatusChoiceBox;
 
@@ -50,6 +53,8 @@ public class ProductionOrderInsertController implements InsertController, Initia
     private ObservableList<String> itemsId = FXCollections.<String>observableArrayList();
     private List<Integer> Id = new ArrayList<Integer>();
 
+    private DatePickerFormatter datePickerFormatter;
+
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -59,6 +64,12 @@ public class ProductionOrderInsertController implements InsertController, Initia
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(startDateField);
+        datePickerFormatter.setDatePickerFormatter(endDateField);
+
         orderStatusChoiceBox.setItems(itemsOrderStatus);
         try {
             ResultSet setOrderStatus = connection.executeQueryAndGetResult("select * from order_status");
@@ -111,17 +122,17 @@ public class ProductionOrderInsertController implements InsertController, Initia
 
         idChoiceBox.setValue(id);
         orderStatusChoiceBox.setValue(orderStatus);
-        startDateField.setText(startDate);
-        endDateField.setText(endDate);
+        startDateField.setValue(LocalDate.parse(startDate));
+        endDateField.setValue(LocalDate.parse(endDate));
     }
 
     public void insertButtonTapped(ActionEvent actionEvent) throws SQLException {
-        if (startDateField.getText().isEmpty() || endDateField.getText().isEmpty()) {
+        if (Objects.equals(String.valueOf(startDateField.getValue()), "") || Objects.equals(String.valueOf(endDateField.getValue()), "")) {
             showAlert("empty!", "Fill in required fields");
 
         } else {
-            String startDate = startDateField.getText();
-            String endDate = endDateField.getText();
+            String startDate = String.valueOf(startDateField.getValue());
+            String endDate = String.valueOf(endDateField.getValue());
 
             String orderStatus = orderStatusChoiceBox.getValue().toString();
             int orderStatusId = OrderStatus.get(orderStatus);

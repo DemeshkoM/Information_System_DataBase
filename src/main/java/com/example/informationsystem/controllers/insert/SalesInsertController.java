@@ -1,5 +1,6 @@
 package com.example.informationsystem.controllers.insert;
 
+import com.example.informationsystem.utils.DatePickerFormatter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.example.informationsystem.utils.DBInit;
@@ -18,6 +20,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -34,13 +37,14 @@ public class SalesInsertController implements InsertController, Initializable {
     @FXML
     private Button insertButton;
     @FXML
-    private TextField salesDateField;
+    private DatePicker salesDateField;
 
     @FXML
     private ChoiceBox idChoiceBox;
 
     private ObservableList<String> itemsId = FXCollections.<String>observableArrayList();
-    private List<Integer> Id = new ArrayList<Integer>();;
+    private List<Integer> Id = new ArrayList<Integer>();
+    private DatePickerFormatter datePickerFormatter;
 
 
     @Override
@@ -51,6 +55,11 @@ public class SalesInsertController implements InsertController, Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(salesDateField);
+
         idChoiceBox.setItems(itemsId);
 
         try {
@@ -83,15 +92,15 @@ public class SalesInsertController implements InsertController, Initializable {
         System.out.println(item);
 
         idChoiceBox.setValue(id);
-        salesDateField.setText(salesDate);
+        salesDateField.setValue(LocalDate.parse(salesDate));
     }
 
     public void insertButtonTapped(ActionEvent actionEvent) throws SQLException {
-        if (salesDateField.getText().isEmpty()) {
+        if (Objects.equals(String.valueOf(salesDateField.getValue()), "")) {
             showAlert("empty!", "Fill in required fields");
 
         } else {
-            String salesDate = salesDateField.getText();
+            String salesDate = String.valueOf(salesDateField.getValue());
 
             String strId = idChoiceBox.getValue().toString();
             int intId = Integer.parseInt(strId);

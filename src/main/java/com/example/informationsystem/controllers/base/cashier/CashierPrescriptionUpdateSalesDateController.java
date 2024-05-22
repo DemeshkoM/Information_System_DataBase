@@ -1,6 +1,7 @@
 package com.example.informationsystem.controllers.base.cashier;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
+import com.example.informationsystem.utils.DatePickerFormatter;
 import com.example.informationsystem.utils.InputFilter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -37,6 +38,7 @@ public class CashierPrescriptionUpdateSalesDateController implements InsertContr
     private Button insertButton;
     @FXML
     private DatePicker salesDateField;
+    private DatePickerFormatter datePickerFormatter;
 
     @Override
     public void setListener(ChangeListener listener) {
@@ -46,6 +48,10 @@ public class CashierPrescriptionUpdateSalesDateController implements InsertContr
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
+
+        datePickerFormatter = new DatePickerFormatter();
+
+        datePickerFormatter.setDatePickerFormatter(salesDateField);
     }
 
     public void setMode(InsertMode mode) {

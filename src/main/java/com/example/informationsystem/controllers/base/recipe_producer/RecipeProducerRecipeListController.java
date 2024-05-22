@@ -487,9 +487,12 @@ public class RecipeProducerRecipeListController implements Initializable {
         Object itemToRemove = tableViewRecipeIngredient.getSelectionModel().getSelectedItem();
         String item = itemToRemove.toString();
         System.out.println(item);
-        int id = DBInit.getIdFromIngRecI(item);
+        String id = DBInit.getIdFromIngRecI(item);
+        Integer id_recipe = DBInit.getIdFromIngRec(item);
 
-        connection.delete("DELETE FROM ingredient_recipe" + " WHERE " + " id_ingredient LIKE " + id);
+        connection.delete("DELETE FROM ingredient_recipe WHERE id_ingredient IN (SELECT id FROM ingredient WHERE name_ingredient LIKE  " +
+                "'"+id+"') " +
+                "AND id_recipe = "+id_recipe+"");
 
         tableViewRecipeIngredient.getItems().removeAll(itemToRemove);
         try {

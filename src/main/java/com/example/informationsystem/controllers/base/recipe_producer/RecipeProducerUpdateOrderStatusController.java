@@ -42,9 +42,9 @@ public class RecipeProducerUpdateOrderStatusController implements InsertControll
     public void initialize(URL location, ResourceBundle resources) {
         dbInit = new DBInit(connection);
         orderStatusChoiceBox.setItems(itemsOrderStatus);
-        orderStatusChoiceBox.setItems(itemsOrderStatus);
+
         try {
-            ResultSet setOrderStatus = connection.executeQueryAndGetResult("select * from order_status");
+            ResultSet setOrderStatus = connection.executeQueryAndGetResult("select * from order_status WHERE id = 4");
             OrderStatus = new HashMap<>();
             itemsOrderStatus.clear();
 

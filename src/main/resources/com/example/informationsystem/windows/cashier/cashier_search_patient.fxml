@@ -11,8 +11,8 @@
       <Label layoutX="26.0" layoutY="95.0" text="Номер телефона" textFill="WHITE" />
       <Label layoutX="26.0" layoutY="175.0" text="Адрес" textFill="WHITE" />
       <Button layoutX="267.0" layoutY="196.0" mnemonicParsing="false" onAction="#listButtonTapped" style="-fx-background-color: rgb(98,177,208);" text="Поиск" textFill="WHITE" />
-      <ComboBox fx:id="nameBox" layoutX="26.0" layoutY="57.0" prefWidth="150.0" />
-      <ComboBox fx:id="phoneBox" layoutX="26.0" layoutY="126.0" prefWidth="150.0" />
-      <ComboBox fx:id="addressBox" layoutX="26.0" layoutY="196.0" prefWidth="150.0" />
+      <ComboBox fx:id="nameBox" editable="true" layoutX="26.0" layoutY="57.0" prefWidth="150.0" />
+      <ComboBox fx:id="phoneBox" editable="true" layoutX="26.0" layoutY="126.0" prefWidth="150.0" />
+      <ComboBox fx:id="addressBox" editable="true" layoutX="26.0" layoutY="196.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -118,7 +118,12 @@ public class ProviderRecipeListUpdateIngredientRecipeController implements Inser
             String amount = amountField.getText();
 
             String strId = idChoiceBox.getValue().toString();
-            int intId = Integer.parseInt(strId);
+
+            String operation = "SELECT id FROM ingredient WHERE name_ingredient = '" + strId + "'";
+
+            ResultSet set = connection.executeQueryAndGetResult(operation);
+            set.next();
+            int intId = set.getInt(1);
 
             String strIdRecipe = idRecipeChoiceBox.getValue().toString();
             int intIdRecipe = Integer.parseInt(strIdRecipe);

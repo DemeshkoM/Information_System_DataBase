@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import com.example.informationsystem.utils.Connection;
@@ -116,6 +117,8 @@ public class MainController implements Initializable {
                 "  GRANT SELECT ON dbname.search_recipe TO 'cashier';  " +
                 "  GRANT SELECT ON dbname.ingredient TO 'cashier';  " +
                 "  GRANT SELECT ON dbname.ingredient_recipe TO 'cashier';  " +
+                "GRANT SELECT ON dbname.medication_types TO 'cashier'; " +
+                "GRANT SELECT ON dbname.medication_diagnosis_description TO 'cashier';" +
                 "    " +
                 "  GRANT SELECT, INSERT ON dbname.prescription TO 'cashier';  " +
                 "  GRANT SELECT, INSERT ON dbname.production_order TO 'cashier';  " +
@@ -161,6 +164,8 @@ public class MainController implements Initializable {
                 "  GRANT SELECT ON dbname.ingredient TO 'recipe_producer';  " +
                 "  GRANT SELECT ON dbname.ingredient_recipe TO 'recipe_producer';  " +
                 "  GRANT SELECT ON dbname.production_order TO 'recipe_producer';  " +
+                "GRANT SELECT ON dbname.medication_types TO 'recipe_producer'; " +
+                "GRANT SELECT ON dbname.medication_diagnosis_description TO 'recipe_producer';" +
                 "    " +
                 "  GRANT UPDATE(status_id) ON dbname.production_order TO 'recipe_producer';  " +
                 "    " +
@@ -221,6 +226,16 @@ public class MainController implements Initializable {
         connection.executeQuery("CALL add_Cashier('db_cashier','3','localhost');");
         connection.executeQuery("CALL add_Producer('db_producer','5','localhost');");
         connection.executeQuery("CALL add_Provider('db_provider','7','localhost');");
+
+        showConfirmation("Успешно", "Тестовые пользователи созданы и имеют неоходимые роли.");
+    }
+
+    public void showConfirmation(String message, String comment) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(message);
+        alert.setContentText(comment);
+        alert.showAndWait();
     }
 
     @FXML

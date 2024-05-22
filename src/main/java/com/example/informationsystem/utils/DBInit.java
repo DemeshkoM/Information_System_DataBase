@@ -3,8 +3,10 @@ package com.example.informationsystem.utils;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.ProductionOrderInsertController;
 import com.example.informationsystem.utils.Connection;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -43,6 +45,7 @@ public class DBInit {
         createProcedure();
         createViews();
         insertInfo();
+        createProceduresRoles();
         createDBAdmin();
 
 
@@ -60,9 +63,9 @@ public class DBInit {
         return id.intValue();
     }
 
-    public static int getIdFromIngRecI(String item) {
-        Integer id = Integer.valueOf(getSubstring(" ID ингредиента=", "ID ингредиента=", item));
-        return id.intValue();
+    public static String getIdFromIngRecI(String item) {
+        String id = getSubstring(" ID ингредиента=", "ID ингредиента=", item);
+        return id;
     }
 
     public static String getSubstring(String start1, String start2, String item) {
@@ -91,6 +94,140 @@ public class DBInit {
         }
     }
 
+    private void createProceduresRoles() throws SQLException {
+        try {
+
+            String createRoleCashier = "  CREATE PROCEDURE IF NOT EXISTS add_Cashier (IN login VARCHAR(200), IN pass VARCHAR(200), IN host_name VARCHAR(200))  " +
+                    "  BEGIN  " +
+                    "  DECLARE user_name VARCHAR(255);  " +
+                    "  DECLARE word VARCHAR(255);  " +
+                    "  CREATE ROLE IF NOT EXISTS 'cashier';  " +
+                    "    " +
+                    "  GRANT EXECUTE ON PROCEDURE dbname.learn_stock_quantity TO 'cashier';  " +
+                    "    " +
+                    "  GRANT SELECT,INSERT, UPDATE, DELETE ON dbname.doctor TO 'cashier';  " +
+                    "  GRANT SELECT,INSERT, UPDATE, DELETE ON dbname.patient TO 'cashier';  " +
+                    "    " +
+                    "    " +
+                    "  GRANT SELECT ON dbname.medicine TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.ready_medicine TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.order_status TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.search_prescription TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.search_ready_medicine TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.search_recipe TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.ingredient TO 'cashier';  " +
+                    "  GRANT SELECT ON dbname.ingredient_recipe TO 'cashier';  " +
+                    "GRANT SELECT ON dbname.medication_types TO 'cashier'; " +
+                    "GRANT SELECT ON dbname.medication_diagnosis_description TO 'cashier';" +
+                    "    " +
+                    "  GRANT SELECT, INSERT ON dbname.prescription TO 'cashier';  " +
+                    "  GRANT SELECT, INSERT ON dbname.production_order TO 'cashier';  " +
+                    "  GRANT SELECT, INSERT ON dbname.sales TO 'cashier';  " +
+                    "    " +
+                    "    " +
+                    "    " +
+                    "  GRANT UPDATE(diagnosis, direction_for_use) ON dbname.prescription TO 'cashier';  " +
+                    "    " +
+                    "  GRANT UPDATE(status_id, end_date) ON dbname.production_order TO 'cashier';  " +
+                    "    " +
+                    "  GRANT UPDATE(sales_date) ON dbname.sales TO 'cashier';  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "    " +
+                    "  set @sql = concat(\"DROP USER IF EXISTS '\",`login`,\"'@'\",`host_name`,\"'\");  " +
+                    "     PREPARE stmt1 FROM @sql;  " +
+                    "     EXECUTE stmt1;  " +
+                    "     DEALLOCATE PREPARE stmt1;  " +
+                    "       " +
+                    "  set @sql = concat(\"CREATE USER IF NOT EXISTS '\",`login`,\"'@'\",`host_name`,\"' IDENTIFIED BY '\",`pass`,\"'  DEFAULT ROLE 'cashier'\");  " +
+                    "     PREPARE stmt2 FROM @sql;  " +
+                    "     EXECUTE stmt2;  " +
+                    "     DEALLOCATE PREPARE stmt2;  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "  END;  ";
+            connection.executeQuery(createRoleCashier);
+
+            String createRoleProducer = "  CREATE PROCEDURE IF NOT EXISTS  add_Producer (IN login VARCHAR(200), IN pass VARCHAR(200), IN host_name VARCHAR(200))  " +
+                    "  BEGIN  " +
+                    "  DECLARE user_name VARCHAR(255);  " +
+                    "  DECLARE word VARCHAR(255);  " +
+                    "  CREATE ROLE IF NOT EXISTS 'recipe_producer';  " +
+                    "    " +
+                    "  GRANT SELECT ON dbname.patient TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.doctor TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.medicine TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.order_status TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.search_prescription TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.search_recipe TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.prescription TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.ingredient TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.ingredient_recipe TO 'recipe_producer';  " +
+                    "  GRANT SELECT ON dbname.production_order TO 'recipe_producer';  " +
+                    "GRANT SELECT ON dbname.medication_types TO 'recipe_producer'; " +
+                    "GRANT SELECT ON dbname.medication_diagnosis_description TO 'recipe_producer';" +
+                    "    " +
+                    "  GRANT UPDATE(status_id) ON dbname.production_order TO 'recipe_producer';  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "    " +
+                    "  set @sql = concat(\"DROP USER IF EXISTS '\",`login`,\"'@'\",`host_name`,\"'\");  " +
+                    "     PREPARE stmt1 FROM @sql;  " +
+                    "     EXECUTE stmt1;  " +
+                    "     DEALLOCATE PREPARE stmt1;  " +
+                    "       " +
+                    "  set @sql = concat(\"CREATE USER IF NOT EXISTS '\",`login`,\"'@'\",`host_name`,\"' IDENTIFIED BY '\",`pass`,\"'  DEFAULT ROLE 'recipe_producer'\");  " +
+                    "     PREPARE stmt2 FROM @sql;  " +
+                    "     EXECUTE stmt2;  " +
+                    "     DEALLOCATE PREPARE stmt2;  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "  END;  ";
+            connection.executeQuery(createRoleProducer);
+
+            String createRoleProvider = "  CREATE PROCEDURE IF NOT EXISTS  add_Provider (IN login VARCHAR(200), IN pass VARCHAR(200), IN host_name VARCHAR(200))  " +
+                    "  BEGIN  " +
+                    "  DECLARE user_name VARCHAR(255);  " +
+                    "  DECLARE word VARCHAR(255);  " +
+                    "  CREATE ROLE IF NOT EXISTS 'provider';  " +
+                    "    " +
+                    "  GRANT SELECT,INSERT, UPDATE, DELETE ON dbname.medicine TO 'provider';  " +
+                    "  GRANT SELECT,INSERT, UPDATE, DELETE ON dbname.recipe TO 'provider';  " +
+                    "  GRANT SELECT,INSERT, UPDATE, DELETE ON dbname.ingredient_recipe TO 'provider';  " +
+                    "    " +
+                    "  GRANT SELECT ON dbname.medication_types TO 'provider';  " +
+                    "  GRANT SELECT ON dbname.medication_diagnosis_description TO 'provider';  " +
+                    "  GRANT SELECT ON dbname.search_ready_medicine TO 'provider';  " +
+                    "  GRANT SELECT ON dbname.search_recipe TO 'provider';  " +
+                    "    " +
+                    "  GRANT SELECT, INSERT ON dbname.ready_medicine TO 'provider';  " +
+                    "    " +
+                    "  GRANT SELECT, INSERT, DELETE ON dbname.ingredient TO 'provider';  " +
+                    "    " +
+                    "  GRANT UPDATE, DELETE ON dbname.ready_medicine TO 'provider';  " +
+                    "    " +
+                    "  GRANT UPDATE ON dbname.ingredient TO 'provider';  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "    " +
+                    "  set @sql = concat(\"DROP USER IF EXISTS '\",`login`,\"'@'\",`host_name`,\"'\");  " +
+                    "     PREPARE stmt1 FROM @sql;  " +
+                    "     EXECUTE stmt1;  " +
+                    "     DEALLOCATE PREPARE stmt1;  " +
+                    "       " +
+                    "  set @sql = concat(\"CREATE USER IF NOT EXISTS '\",`login`,\"'@'\",`host_name`,\"' IDENTIFIED BY '\",`pass`,\"'  DEFAULT ROLE 'provider'\");  " +
+                    "     PREPARE stmt2 FROM @sql;  " +
+                    "     EXECUTE stmt2;  " +
+                    "     DEALLOCATE PREPARE stmt2;  " +
+                    "    " +
+                    "  FLUSH PRIVILEGES;  " +
+                    "  END;  ";
+            connection.executeQuery(createRoleProvider);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+            showAlert("error with connection to server", "");
+        }
+    }
     private void createDBAdmin() throws SQLException {
         String createRoleAdmin = "  CREATE PROCEDURE add_Admin (IN login VARCHAR(200), IN pass VARCHAR(200), IN host_name VARCHAR(200))  " +
                 "  BEGIN  " +
@@ -108,6 +245,9 @@ public class DBInit {
                 "  GRANT CREATE ROUTINE ON dbname.* TO 'pharmacy_db_admin';  " +
                 "    " +
                 "  GRANT EXECUTE ON PROCEDURE dbname.learn_stock_quantity TO 'pharmacy_db_admin' WITH GRANT OPTION;  " +
+                " GRANT EXECUTE ON PROCEDURE dbname.add_Cashier TO 'pharmacy_db_admin';" +
+                " GRANT EXECUTE ON PROCEDURE dbname.add_Producer TO 'pharmacy_db_admin';" +
+                " GRANT EXECUTE ON PROCEDURE dbname.add_Provider TO 'pharmacy_db_admin';" +
                 "    " +
                 "  GRANT SELECT ON dbname.medication_category TO 'pharmacy_db_admin' WITH GRANT OPTION;  " +
                 "  GRANT SELECT ON dbname.medication_types TO 'pharmacy_db_admin' WITH GRANT OPTION;  " +
@@ -524,16 +664,16 @@ public class DBInit {
                 "    " +
                 "  SELECT medicine_id INTO medicine_id_pro FROM prescription WHERE id = NEW.id;  " +
                 "    " +
-                "  if(OLD.status_id = 1 AND NEW.status_id <> 2) THEN  " +
+                "  if(OLD.status_id = 1 AND (NEW.status_id <> 2 AND NEW.status_id <> 1)) THEN  " +
                 "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Некорректный порядок смены статуса. После идет Ожидание оплаты';  " +
                 "  END if;  " +
-                "  if(OLD.status_id = 2 AND NEW.status_id <> 3 AND medicine_id_pro IN (SELECT id FROM recipe)) THEN  " +
+                "  if((OLD.status_id = 2 AND (NEW.status_id <> 3 AND NEW.status_id <> 2)) AND medicine_id_pro IN (SELECT id FROM recipe)) THEN  " +
                 "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Некорректный порядок смены статуса. После идет В процессе приготовления';  " +
                 "  END if;  " +
-                "  if(OLD.status_id = 3 AND NEW.status_id <> 4 AND medicine_id_pro IN (SELECT id FROM recipe)) THEN  " +
+                "  if((OLD.status_id = 3 AND (NEW.status_id <> 4 AND NEW.status_id <> 3)) AND medicine_id_pro IN (SELECT id FROM recipe)) THEN  " +
                 "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Некорректный порядок смены статуса. После идет Готов';  " +
                 "  END if;  " +
-                "  if(OLD.status_id = 4 AND (NEW.status_id <> 5 AND NEW.status_id <> 6)) THEN  " +
+                "  if(OLD.status_id = 4 AND ((NEW.status_id <> 5 AND NEW.status_id <> 6) AND NEW.status_id <> 4)) THEN  " +
                 "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Некорректный порядок смены статуса. После идет Завершен или Пропал';  " +
                 "  END if;  " +
                 "    " +
@@ -686,6 +826,36 @@ public class DBInit {
                 "  END;  ";
         connection.executeQuery("DROP TRIGGER if exists update_ready_stock; ");
         connection.executeQuery(trigger22);
+
+        String trigger23 = "  CREATE TRIGGER update_medicine_in_presc BEFORE UPDATE ON medicine  " +
+                "  FOR EACH ROW  " +
+                "  BEGIN  " +
+                "  if(NEW.id IN (SELECT medicine_id FROM prescription)) THEN  " +
+                "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Лек-во уже было использовано при оформлении заказа. Изменение данных о нем запрещено';  " +
+                "  END if;  " +
+                "  END;  ";
+        connection.executeQuery("DROP TRIGGER if exists update_medicine_in_presc; ");
+        connection.executeQuery(trigger23);
+
+        String trigger24 = "  CREATE TRIGGER insert_not_ready_medicine_in_ready BEFORE INSERT ON ready_medicine  " +
+                "  FOR EACH ROW  " +
+                "  BEGIN  " +
+                "  IF(NEW.id IN(SELECT id FROM medicine WHERE medicament_type_id IN (SELECT id FROM medication_types WHERE name_med_category_id = 2))) THEN  " +
+                "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Вставка лек-ва категории Изготовляемое в список готовых запрещено';  " +
+                "  END if;  " +
+                "  END;  ";
+        connection.executeQuery("DROP TRIGGER if exists insert_not_ready_medicine_in_ready; ");
+        connection.executeQuery(trigger24);
+
+        String trigger25 = "  CREATE TRIGGER insert_only_ready_medicine_in_not_ready BEFORE INSERT ON recipe  " +
+                "  FOR EACH ROW  " +
+                "  BEGIN  " +
+                "  IF(NEW.id IN(SELECT id FROM medicine WHERE medicament_type_id IN (SELECT id FROM medication_types WHERE name_med_category_id = 1))) THEN  " +
+                "  SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Вставка лек-ва категории Готовое в справочник Изготовляемых запрещено';  " +
+                "  END if;  " +
+                "  END;  ";
+        connection.executeQuery("DROP TRIGGER if exists insert_only_ready_medicine_in_not_ready; ");
+        connection.executeQuery(trigger25);
     }
 
     public void createProcedure() throws SQLException {
@@ -820,6 +990,14 @@ public class DBInit {
     public void showAlert(String message, String comment) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
+        alert.setHeaderText(message);
+        alert.setContentText(comment);
+        alert.showAndWait();
+    }
+
+    public void showConfirmation(String message, String comment) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
         alert.setHeaderText(message);
         alert.setContentText(comment);
         alert.showAndWait();
@@ -1106,23 +1284,6 @@ public class DBInit {
         insertMedicationDiagnosisDescription("Противовирусные");
         insertMedicationDiagnosisDescription("Простуда и грипп");
 
-
-        insertMedicine("Назол", 6, 7, "не продается");
-        insertMedicine("Фестал", 3, 3,"не продается");
-        insertMedicine("Гербион сироп подорожника", 4,7, "не продается");
-
-        insertReadyMedicine(1,  100, 25, 100);
-        insertReadyMedicine(2,  100, 25,100);
-
-        insertDoctor("-");
-        insertDoctor("Петров Борис Викторович");
-
-        insertPatient("-", "-", "-", Date.valueOf("1900-01-01"));
-        insertPatient("Иванов Василий Павлович", "+79861236523", "ул. Чуского 1", Date.valueOf("1987-06-12"));
-
-        insertPrescription(2,1,2,1,"Простуда", "Внутрь");
-        insertPrescription(2,3,2,1,"Простуда", "Внутрь");
-
         insertOrderStatus("Ожидание доставки ингредиентов");
         insertOrderStatus("Ожидание оплаты");
         insertOrderStatus("В процессе приготовления");
@@ -1130,12 +1291,66 @@ public class DBInit {
         insertOrderStatus("Завершен");
         insertOrderStatus("Пропал");
 
-        insertProductionOrder(2,1,Date.valueOf("2024-01-12"), Date.valueOf("2024-01-15"));
-        insertSales(2,Date.valueOf("2024-01-12"));
 
-        insertRecipe(3,"Смешать ингредиенты", 1);
-        insertIngredient("Подорожник", 100,25,10);
-        insertRecipeIngredient(3,1,20);
+        insertMedicine("Назол", 6, 7, "продается");
+        insertMedicine("Фестал", 3, 3,"продается");
+        insertMedicine("Гербион сироп подорожника", 4,7, "не продается");
+        insertMedicine("Нейрофлексин", 3,4,"не продается");
+        insertMedicine("Легкофикс", 1,2,"не продается");
+        insertMedicine("Виталиндекс", 5,5,"не продается");
+        insertMedicine("Кардиопринт", 2,4,"не продается");
+
+        insertReadyMedicine(1,250,100,500);
+        insertReadyMedicine(2,250,100,500);
+        insertReadyMedicine(4,100,25,1000);
+        insertReadyMedicine(5,100,25,1000);
+
+        insertIngredient("Подорожник", 1000,500,10);
+        insertIngredient("Ацетилсалициловая кислота",500,100,100);
+        insertIngredient("Магния стеарат",500,100,100);
+        insertIngredient("Полиэтиленгликоль",500,100,100);
+        insertIngredient("Пчелиный воск",500,100,100);
+        insertIngredient("Анальгин",500,100,100);
+
+        insertRecipe(3, "Смешать ингредиенты", 1);
+        insertRecipe(6, "Смешать ингредиенты", 2);
+        insertRecipe(7, "Смешать ингредиенты", 3);
+
+        insertRecipeIngredient(3,1,10);
+        insertRecipeIngredient(3,2,10);
+        insertRecipeIngredient(6,3,10);
+        insertRecipeIngredient(6,4,10);
+        insertRecipeIngredient(6,2,10);
+        insertRecipeIngredient(7,6,10);
+        insertRecipeIngredient(7,2,10);
+
+        insertPatient("-","-","-", Date.valueOf("1900-01-01"));
+        insertPatient("Горбачева Вера Артёмовна","7(923)480-44-99","спуск Балканская, 45", Date.valueOf("1990-06-13"));
+        insertPatient("Морозова Алиса Константиновна","7(923)627-00-86","пл. Гагарина, 68", Date.valueOf("1980-08-07"));
+        insertPatient("Платонов Дмитрий Максимович","7(923)805-98-22","спуск Ленина, 78", Date.valueOf("1990-01-11"));
+        insertPatient("Ершов Савва Максимович","7(923)185-70-09","пр. Бухарестская, 29", Date.valueOf("1993-03-15"));
+        insertPatient("Максимов Алексей Михайлович","7(953)617-17-71","пер. Косиора, 66", Date.valueOf("1981-06-29"));
+        insertPatient("Наумова Варвара Маратовна","7(953)768-01-50","наб. Сталина, 76", Date.valueOf("1960-03-22"));
+
+        insertDoctor("-");
+        insertDoctor("Борисов Дмитрий Александрович");
+        insertDoctor("Жуков Георгий Фёдорович");
+        insertDoctor("Медведева Екатерина Андреевна");
+        insertDoctor("Прохорова Александра Андреевна");
+
+        insertPrescription(1,1,1,1,"-","-");
+        insertPrescription(1,2,1,1,"-","-");
+        insertPrescription(3,3,2,2,"Простуда", "внутрь");
+        insertPrescription(4,4,3,1,"Нервное рас-во", "внутрь, 1 раз в день");
+        insertPrescription(5,5,3,1,"Сыпь", "2 раза в день мазать очаги воспаления");
+
+        insertProductionOrder(3,2,Date.valueOf("2023-06-13"), Date.valueOf("2023-06-15"));
+        insertProductionOrder(4,2,Date.valueOf("2023-06-13"),Date.valueOf("2023-06-13"));
+        insertProductionOrder(5,2,Date.valueOf("2023-06-13"),Date.valueOf("2023-06-13"));
+
+        insertSales(3, Date.valueOf("2023-06-14"));
+        insertSales(4, Date.valueOf("2023-06-13"));
+        insertSales(5, Date.valueOf("2023-06-13"));
     }
 
     public void insertMedicationCategory (String name) {
@@ -1180,7 +1395,7 @@ public class DBInit {
     public Integer insertMedicine (String nameMedicament, Integer nameMedicamentTypeId, Integer nameMedDiagDescId, String sellingWithoutPresc) {
         PreparedStatement preparedStatement = null;
         Integer lastInsertId = 0;
-        String sqlInsertTable = "INSERT INTO medicine(name_medicament, medicament_type_id, med_diagnosis_description_id, selling_without_presc) " +
+        String sqlInsertTable = "INSERT IGNORE INTO medicine(name_medicament, medicament_type_id, med_diagnosis_description_id, selling_without_presc) " +
                 "VALUES ('" + nameMedicament + "', '" + nameMedicamentTypeId + "','" +nameMedDiagDescId + "','" + sellingWithoutPresc + "')";
         try {
             preparedStatement = connection.getConnection().prepareStatement(sqlInsertTable, Statement.RETURN_GENERATED_KEYS);
@@ -1209,7 +1424,7 @@ public class DBInit {
         try {
             preparedStatement = connection.getConnection().prepareStatement(sqlInsertTable);
             preparedStatement.executeUpdate();
-            showAlert("Завершено", "Лек-во добавлено в список готовых лекарств");
+            showConfirmation("Завершено", "Лек-во добавлено в список готовых лекарств");
         } catch (SQLException throwables) {
             System.out.println("can't insert into ready_medicine table");
             throwables.printStackTrace();
@@ -1257,6 +1472,8 @@ public class DBInit {
             if (generatedKeyResult.next()) {
                 lastInsertId = generatedKeyResult.getInt(1);
             }
+
+            showConfirmation("Завершено", "Заказ добавлен в список заказов");
         } catch (SQLException throwables) {
             Integer sqlErrorCodeInsertPrescriptionWithoutNames = 1644;
             if (throwables.getErrorCode() == sqlErrorCodeInsertPrescriptionWithoutNames) {
@@ -1327,6 +1544,8 @@ public class DBInit {
             if (generatedKeyResult.next()) {
                 lastInsertId = generatedKeyResult.getInt(1);
             }
+
+            showConfirmation("Завершено", "Лек-во добавлено в справочник изготовляемых лекарств");
         } catch (SQLException throwables) {
             System.out.println("can't insert into recipe table");
             throwables.printStackTrace();
@@ -1401,7 +1620,14 @@ public class DBInit {
                 " WHERE id = " + id;
         List<String> employee_category = new LinkedList<>();
         employee_category.add(sql);
-        connection.insert(employee_category);
+        try {
+            connection.insert(employee_category);
+        }
+        catch (SQLException throwables) {
+            if (Objects.equals(throwables.getMessage(), "Лек-во уже было использовано при оформлении заказа. Изменение данных о нем запрещено")) {
+                showAlert("Вставка отменена", "Лек-во уже было использовано при оформлении заказа.\n Изменение данных о нем запрещено");
+            }
+        }
         System.out.println("UPDATE employee_category_type");
     }
 

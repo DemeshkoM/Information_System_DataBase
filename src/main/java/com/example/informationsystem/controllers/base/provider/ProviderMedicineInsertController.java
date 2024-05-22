@@ -401,16 +401,22 @@ public class ProviderMedicineInsertController implements InsertController, Initi
             String preparation = preparationMethod.getText();
             Integer time = Integer.valueOf(timeHours.getText());
 
-            int lastId;
+            int lastId = 0;
 
             if (insertMode == InsertMode.insert) {
-                lastId = dbInit.insertMedicine(name, typeMedId, diagnosisDescMedId, checkPresc);
+                System.out.println(typeMedId);
+                if (typeMedId == 3) {
+                    showAlert("Ошибка", "Вставка лек-ва категории Готовое в справочник Изготовляемых запрещено");
+                }
+                else {
+                    lastId = dbInit.insertMedicine(name, typeMedId, diagnosisDescMedId, checkPresc);
 
-                dbInit.insertRecipe(lastId,preparation,time);
+                    dbInit.insertRecipe(lastId, preparation, time);
 
-                lastIdRecipe = lastId;
+                    lastIdRecipe = lastId;
 
-                showAlert("Завершено", "Лек-во добавлено в справочник изготовляемых лекарств");
+                    showConfirmation("Завершено", "Лек-во добавлено в справочник изготовляемых лекарств");
+                }
             }
 
             ingredient_recipe.setDisable(false);
@@ -545,10 +551,14 @@ public class ProviderMedicineInsertController implements InsertController, Initi
             int lastId;
 
             if (insertMode == InsertMode.insert) {
+                    if(typeMedId == 4 || typeMedId == 5) {
+                        showAlert("Ошибка", "Вставка лек-ва категории Изготовляемое в список готовых запрещено");
+                    }
+                    else {
+                        lastId = dbInit.insertMedicine(name, typeMedId, diagnosisDescMedId, checkPresc);
 
-                    lastId = dbInit.insertMedicine(name, typeMedId, diagnosisDescMedId, checkPresc);
-
-                    dbInit.insertReadyMedicine(lastId, storageQuantity, criticalQuantity, price);
+                        dbInit.insertReadyMedicine(lastId, storageQuantity, criticalQuantity, price);
+                    }
             }
 
             listener.changed(name_obser, "", name_obser);
@@ -582,5 +592,26 @@ public class ProviderMedicineInsertController implements InsertController, Initi
 
         preparationMethod.clear();
         timeHours.clear();
+    }
+
+    public void learnInfoOnMedNameInListsButtonTapped() throws SQLException {
+        if (!nameField.getText().isEmpty()) {
+            String operation;
+
+            operation = "SELECT COUNT(*) AS total_count FROM medicine WHERE name_medicament LIKE '" + nameField.getText() + "'";
+            System.out.println(operation);
+
+            ResultSet set = connection.executeQueryAndGetResult(operation);
+
+            set.next();
+            int count = set.getInt("total_count");
+
+            if(count != 0) {
+                showAlert("Повторный ввод","Лек-во с таким названием уже есть в списках.");
+            }
+            else {
+                showConfirmation("Нет проблем","Нет такого лек-ва в списках.");
+            }
+        }
     }
 }

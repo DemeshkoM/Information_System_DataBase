@@ -77,6 +77,8 @@ public class UserCreateController implements Initializable {
                     "  GRANT SELECT ON dbname.search_recipe TO 'cashier';  " +
                     "  GRANT SELECT ON dbname.ingredient TO 'cashier';  " +
                     "  GRANT SELECT ON dbname.ingredient_recipe TO 'cashier';  " +
+                    "GRANT SELECT ON dbname.medication_types TO 'cashier'; " +
+            "GRANT SELECT ON dbname.medication_diagnosis_description TO 'cashier';" +
                     "    " +
                     "  GRANT SELECT, INSERT ON dbname.prescription TO 'cashier';  " +
                     "  GRANT SELECT, INSERT ON dbname.production_order TO 'cashier';  " +
@@ -122,6 +124,8 @@ public class UserCreateController implements Initializable {
                     "  GRANT SELECT ON dbname.ingredient TO 'recipe_producer';  " +
                     "  GRANT SELECT ON dbname.ingredient_recipe TO 'recipe_producer';  " +
                     "  GRANT SELECT ON dbname.production_order TO 'recipe_producer';  " +
+                    "GRANT SELECT ON dbname.medication_types TO 'recipe_producer'; " +
+                    "GRANT SELECT ON dbname.medication_diagnosis_description TO 'recipe_producer';" +
                     "    " +
                     "  GRANT UPDATE(status_id) ON dbname.production_order TO 'recipe_producer';  " +
                     "    " +
@@ -198,7 +202,7 @@ public class UserCreateController implements Initializable {
             showAlert("error with connection to server", "");
         }
         if (isNotEmpty()  && !alertCheck) {
-            showAlert("Завершено", "Пользователь создан. Пользователь может зайти через окно логин/пароль.");
+            showConfirmation("Завершено", "Пользователь создан. Пользователь может зайти через окно логин/пароль.");
         }
     }
 
@@ -221,6 +225,15 @@ public class UserCreateController implements Initializable {
         alertCheck = true;
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    private void showConfirmation(String header, String content) {
+        alertCheck = true;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();

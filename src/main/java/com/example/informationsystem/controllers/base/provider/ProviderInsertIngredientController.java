@@ -3,6 +3,8 @@ package com.example.informationsystem.controllers.base.provider;
 import com.example.informationsystem.Main;
 import com.example.informationsystem.controllers.insert.InsertController;
 import com.example.informationsystem.controllers.insert.InsertMode;
+import com.example.informationsystem.controllers.select.SelectController;
+import com.example.informationsystem.requests.Requests;
 import com.example.informationsystem.utils.Connection;
 import com.example.informationsystem.utils.Tables;
 import javafx.beans.value.ChangeListener;
@@ -134,6 +136,93 @@ public class ProviderInsertIngredientController  implements Initializable {
             for (int i = 1; i <= columnSize; i++) {
                 //String columnName = metaData.getColumnName(i);
                 String columnName = table.getColumnName(i);
+                TableColumn<Map, String> column = new TableColumn<>(columnName);
+                column.setCellValueFactory(new MapValueFactory<>(columnName));
+                column.setMinWidth(40);
+                columnsPatient.add(column);
+                columnNamesPatient.add(columnName);
+            }
+
+
+            tableViewIngredient.getColumns().setAll(columnsPatient);
+
+            for (int i = 1; set.next(); ++i) {
+                Map<String, Object> map = new HashMap<>();
+                for (int j = 1; j <= columnSize; j++) {
+                    String value = set.getString(j);
+                    if (value == null) {
+                        value = "";
+                    }
+                    try {
+                        Date date = formatter.parse(value);
+                        value = formatter2.format(date);
+                    } catch (ParseException ignore) {
+                    }
+                    map.put(columnNamesPatient.get(j - 1), value);
+                }
+                itemsPatient.add(map);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void searchIngredientButtonTapped() {
+        configureSelectIngredientWindow();
+    }
+
+    public void configureSelectIngredientWindow() {
+        String windowName = "";
+        ChangeListener listener = (observable, oldValue, newValue) -> {
+            try {
+                this.set = connection.executeQueryAndGetResult(newValue.toString());
+                loadDataSelectIngredient();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        };
+
+        if(true) {
+            Requests requestTypePatient = Requests.getRequestByName("select_ingredient");
+
+
+            windowName = requestTypePatient.getWindowName();
+            System.out.println(windowName);
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            Parent root = null;
+            try {
+                root = loader.load(getClass().getResourceAsStream(windowName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            SelectController controller = loader.getController();
+            controller.setListener(listener);
+
+            assert root != null;
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+    }
+
+    public void loadDataSelectIngredient() throws SQLException {
+        itemsPatient.clear();
+        columnsPatient.clear();
+        columnsPatient.clear();
+
+        // many-many tables
+        Requests request = Requests.getRequestByName("select_ingredient");
+
+        ResultSet set = this.set;
+
+        ResultSetMetaData metaData = set.getMetaData();
+        int columnSize = set.getMetaData().getColumnCount();
+        try {
+            for (int i = 1; i <= columnSize; i++) {
+                //String columnName = metaData.getColumnName(i);
+                String columnName = request.getColumnName(metaData.getColumnName(i));
                 TableColumn<Map, String> column = new TableColumn<>(columnName);
                 column.setCellValueFactory(new MapValueFactory<>(columnName));
                 column.setMinWidth(40);
